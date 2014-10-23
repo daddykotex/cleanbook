@@ -62,6 +62,9 @@ The name I used is : wp-includes/js/underscore.min.js
 
 ## Todo
 Add settings to deactivate auto-import
+
 Add settings for a notification email 
+
+A lot of CSS fixes to prevent crashes from coming from the theme.
 
 [bootstrap calendar]:http://bootstrap-calendar.azurewebsites.net/
