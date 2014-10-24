@@ -14,7 +14,7 @@
         		UNIQUE KEY id (id),
               PRIMARY KEY (`id`)
             );";
- 
+
    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
    
    dbDelta( $appointments_sql );
