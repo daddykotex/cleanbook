@@ -326,7 +326,7 @@ function sendNotificationEmail($appointment){
         $message .= __('Email', 'cleanbook') . ' : ' . $appointment['email'] . '<br />';
         $message .= __('Phone', 'cleanbook') . ' : ' . $appointment['phone'] . '<br />';
         $message .= __('Date and time', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
-        $message .= __('Comment', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br /><br />';
+        $message .= __('Comment', 'cleanbook') . ' : ' . $appointment['comment'] . '<br /><br />';
 
         $message .= sprintf(__('You can log in the administration panel of your site %s to confirm the appointment.'), get_option('blogname'));
 
