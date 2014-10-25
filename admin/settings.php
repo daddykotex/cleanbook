@@ -50,11 +50,6 @@ function validate_options($input){
 
 
 function settings_page(){
-    $translated_labels = array(
-        'settings-title'        =>  __('Cleanbook Settings', 'cleanbook'),
-        'auto_register_bootstrap-label'       => __( 'Do you want Bootstrap to be automatically registered?', 'cleanbook' )
-    );
-
    include_once(CLEANBOOK_ADMIN_FILE_PATH . '/settings-page.php');
 }
 
