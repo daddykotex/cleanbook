@@ -5,6 +5,7 @@ $action = "toggle_active_status";
 global $wpdb;
 $appointments = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;
 $results = $wpdb->get_results("SELECT * FROM $appointments" , ARRAY_A); 
+$hasResults = !empty($results);
 ?>
 
 <div class="wrap">
@@ -15,6 +16,7 @@ $results = $wpdb->get_results("SELECT * FROM $appointments" , ARRAY_A);
 	<h2><?php _e('Manage appointments', 'cleanbook'); ?></h2>
 
 	<div id="appointments">
+		<?php if ($hasResults){ ?>
 		<table rules="groups">
 			<thead  style="border-collapse: collapse;" >
 				<tr>
@@ -53,12 +55,17 @@ $results = $wpdb->get_results("SELECT * FROM $appointments" , ARRAY_A);
 					</td>
 				</tr>
 				<?php
-			}
-			?> 
-		</tbody>
-	</table>
-	</div>
-</div>
+				}
+				?> 
+			</tbody>
+		</table>
+		<?php 
+		} else {
+			echo '<p>' . __('No appointments were found.', 'cleanbook') .'</p>';
+		}
+		?>
+	</div><!-- #appoitnments -->
+</div><!-- wrap -->
 <script type="text/javascript">
 jQuery(document).ready(function($) { 
 
