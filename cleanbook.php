@@ -139,22 +139,24 @@ Insert appointment function
 function cleanbook_booking() {
     global $wpdb;
     $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;  
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $datetime = $_POST['datetime'];
-    $comment = $_POST['comment'];
 
-    $errors = validate($name, $email, $phone, $datetime) ;
+    $appointment = array();
+    $appointment['name'] = trim($_POST['name']);
+    $appointment['email']= trim($_POST['email']);
+    $appointment['phone']= trim($_POST['phone']);
+    $appointment['datetime']= trim($_POST['datetime']);
+    $appointment['comment']= trim($_POST['comment']);
+
+    $errors = validate($appointment) ;
     if(empty($errors)){
         $success = $wpdb->insert(  
             $appointment_table_name,  
             array(  
-               'name'       => $name,  
-               'email'     => $email,
-               'phone'     => $phone,
-               'datetime'  => $datetime,
-               'comment'   => $comment,
+               'name'       => $appointment['name'],  
+               'email'     => $appointment['email'],
+               'phone'     => $appointment['phone'],
+               'datetime'  => $appointment['datetime'],
+               'comment'   => $appointment['comment'],
                'type'      => 'RENDEZ-VOUS',
                ),  
             array(  
@@ -168,6 +170,9 @@ function cleanbook_booking() {
         
         $message = $success ? __("The booking has been added. It will be reviewed and you'll be contacted for confirmation.", "cleanbook"):
         __("An error has occured. Please contact the administrator.", "cleanbook");
+        if($success){
+            sendNotificationEmail($appointment);
+        }
         echo json_encode(
             array(  'success'=> $success, 
                 'messages' => array(array('message' => $message))
@@ -194,8 +199,8 @@ function cleanbook_fetch_all_appointments(){
 }
 
 function cleanbook_fetch_appointments($active_only) {
-    $start = date('Y-m-d', $_GET['from'] / 1000);
-    $end   = date('Y-m-d', $_GET['to'] / 1000);
+    $start = date('Y-m-d', trim($_GET['from']) / 1000);
+    $end   = date('Y-m-d', trim($_GET['to']) / 1000);
 
     global $wpdb;
 
@@ -241,8 +246,8 @@ Insert appointment function
 */
 function cleanbook_toggle_active_status() {
 
-    $id =  $_POST['id'];
-    $active = $_POST['active'];
+    $id =  trim($_POST['id']);
+    $active = trim($_POST['active']);
 
     if($active == "false"){
         $active = 0;
@@ -280,29 +285,52 @@ function cleanbook_toggle_active_status() {
 add_action( 'wp_ajax_toggle_active_status', 'cleanbook_toggle_active_status' ); 
 
 
-function validate($name, $email, $phone, $datetime){
+function validate($appointment){
     $errors = array();
-    if(empty($name)){
+    if(empty($appointment['name'])){
         $errors[] = array('message' => __("Please provide a name.", "cleanbook"));
     }
 
-    if(empty($email)){
+    if(empty($appointment['email'])){
         $errors[] = array('message' => __("Please provide an email.", "cleanbook"));
-    } else if (!is_email($email)){
+    } else if (!is_email($appointment['email'])){
         $errors[] = array('message' => __("Please provide a valid email : valid@email.com.", "cleanbook"));
     }
 
-    if(empty($phone)){
+    if(empty($appointment['phone'])){
         $errors[] = array('message' => __("Please provide a phone.", "cleanbook"));
-    } else if (!preg_match("/^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/", $phone)){
+    } else if (!preg_match("/^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/", $appointment['phone'])){
         $errors[] = array('message' => __("Please provide a valid phone number : (514) 555-5555.", "cleanbook"));
     }
 
-    if(empty($datetime)){
+    if(empty($appointment['datetime'])){
         $errors[] = array('message' => __("Please provide a date and time", "cleanbook"));
-    } else if (!strtotime($datetime)){
+    } else if (!strtotime($appointment['datetime'])){
         $errors[] = array('message' => __("Please provide a valid date and time : 2014-10-21 16:00:00.", "cleanbook"));
     }
     return $errors;
+}
+
+/*
+    Sends an email, if the option is activated, to the specified email address.
+*/
+function sendNotificationEmail($appointment){
+
+    $options = get_option('cleanbook_options');
+    if($options['activate_email_notification'] && !empty($options['email'])){
+        $to = $options['email'];
+        $subject = sprintf(__('%s booked an appointment on %s.', 'cleanbook'), $appointment['name'], $siteurl);
+        $message =  __('Hi,') . '<br />';
+        $message = sprintf(__('You received this email to let you know that %s as booked an appointment from your website. Here is the information regarding this appointment:'), $appointment['name']);
+        $message = __('Fullname', 'cleanbook') . ' : ' . $appointment['name'] . '<br />';
+        $message = __('Email', 'cleanbook') . ' : ' . $appointment['email'] . '<br />';
+        $message = __('Phone', 'cleanbook') . ' : ' . $appointment['phone'] . '<br />';
+        $message = __('Date and time', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
+        $message = __('Comment', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
+
+        $message = sprintf(__('You can log in the administration panel of your site %s to confirm the appointment.'), get_option('blogname'));
+
+         wp_mail( $to, $subject, $message ); 
+    }
 }
 ?>
