@@ -66,7 +66,7 @@ The name I used is : wp-includes/js/underscore.min.js
 
 == Screenshots ==
 1. screenshot.png 
-2. screenshot-fr.png
+2. screenshot_french.png
 
 == Translators ==
 
