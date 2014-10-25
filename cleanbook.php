@@ -320,17 +320,19 @@ function sendNotificationEmail($appointment){
     if($options['activate_email_notification'] && !empty($options['email'])){
         $to = $options['email'];
         $subject = sprintf(__('%s booked an appointment on %s.', 'cleanbook'), $appointment['name'], SITE_URL);
-        $message =  __('Hi,') . '<br />';
-        $message .= sprintf(__('You received this email to let you know that %s as booked an appointment from your website. Here is the information regarding this appointment:'), $appointment['name']);
+        $message =  __('Hi,') . '<br /><br />';
+        $message .= sprintf(__('You received this email to let you know that %s as booked an appointment from your website. Here is the information regarding this appointment:'), $appointment['name']) . '<br /><br />';
         $message .= __('Fullname', 'cleanbook') . ' : ' . $appointment['name'] . '<br />';
         $message .= __('Email', 'cleanbook') . ' : ' . $appointment['email'] . '<br />';
         $message .= __('Phone', 'cleanbook') . ' : ' . $appointment['phone'] . '<br />';
         $message .= __('Date and time', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
-        $message .= __('Comment', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
+        $message .= __('Comment', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br /><br />';
 
-        $message = sprintf(__('You can log in the administration panel of your site %s to confirm the appointment.'), get_option('blogname'));
+        $message .= sprintf(__('You can log in the administration panel of your site %s to confirm the appointment.'), get_option('blogname'));
 
-         wp_mail( $to, $subject, $message ); 
+        $headers[] = "Content-type: text/html";
+
+         wp_mail( $to, $subject, $message, $headers ); 
     }
 }
 ?>
