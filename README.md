@@ -49,8 +49,8 @@ This way the plugin won't reimport the files. It is possible that your theme imp
 
 ## I18n
 This plugin supports mutiple languages. Currently the following language are provided:
- - French
  - English (default)
+ - French
 
 It is easy to add support for another language. Pick a PO Editor program, load the cleanbook.pot file that is available in the languages folder, translate all the fields and save your .po and .mo files with the proper names.
 
@@ -66,9 +66,6 @@ If you have W3TC, and have an UNEXPECTED TOKEN ILLEGAL ERROR. The minifying proc
 The name I used is : wp-includes/js/underscore.min.js
 
 ## Todo
-Add settings to deactivate auto-import
-
-Add settings for a notification email 
 
 A lot of CSS fixes to prevent crashes from coming from the theme.
 
