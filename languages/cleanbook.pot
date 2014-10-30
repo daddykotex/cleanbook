@@ -1,0 +1,221 @@
+# Copyright (C) 2014 Cleanbook - Responsive plugin based on Bootstrap
+# This file is distributed under the same license as the Cleanbook - Responsive plugin based on Bootstrap package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Cleanbook - Responsive plugin based on Bootstrap 1.0\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/cleanbook\n"
+"POT-Creation-Date: 2014-10-25 15:48:54+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: admin/listdata.php:16 admin/settings.php:9
+msgid "Manage appointments"
+msgstr ""
+
+#: admin/listdata.php:23
+msgid "ID"
+msgstr ""
+
+#: admin/listdata.php:24 cleanbook.php:325 view.php:34
+msgid "Fullname"
+msgstr ""
+
+#: admin/listdata.php:25 cleanbook.php:326 view.php:42
+msgid "Email"
+msgstr ""
+
+#: admin/listdata.php:26 cleanbook.php:327 view.php:50
+msgid "Phone"
+msgstr ""
+
+#: admin/listdata.php:27 cleanbook.php:329 view.php:65
+msgid "Comment"
+msgstr ""
+
+#: admin/listdata.php:28 cleanbook.php:328 view.php:58
+msgid "Date and time"
+msgstr ""
+
+#: admin/listdata.php:46
+msgid "Activate"
+msgstr ""
+
+#: admin/listdata.php:47
+msgid "Deactivate"
+msgstr ""
+
+#: admin/listdata.php:64
+msgid "No appointments were found."
+msgstr ""
+
+#: admin/settings-page.php:2 admin/settings.php:10
+msgid "Cleanbook Settings"
+msgstr ""
+
+#: admin/settings.php:9
+msgid "Cleanbook Appointments"
+msgstr ""
+
+#: admin/settings.php:23
+msgid "General Settings"
+msgstr ""
+
+#: admin/settings.php:24
+msgid "Auto-register Bootstrap"
+msgstr ""
+
+#: admin/settings.php:27
+msgid "Email Notification Settings"
+msgstr ""
+
+#: admin/settings.php:28
+msgid "Activate email notification"
+msgstr ""
+
+#: admin/settings.php:29
+msgid "Email to notify"
+msgstr ""
+
+#: admin/settings.php:36
+msgid ""
+"This is where you will find all of the general settingsthat affects the "
+"behavior of your Cleanbook plugin."
+msgstr ""
+
+#: admin/settings.php:52
+msgid ""
+"This is where you will find all of the settings regarding notification by "
+"email."
+msgstr ""
+
+#: cleanbook.php:171
+msgid ""
+"The booking has been added. It will be reviewed and you'll be contacted for "
+"confirmation."
+msgstr ""
+
+#: cleanbook.php:172 cleanbook.php:274
+msgid "An error has occured. Please contact the administrator."
+msgstr ""
+
+#: cleanbook.php:273
+msgid "The booking was marked as %s."
+msgstr ""
+
+#: cleanbook.php:291
+msgid "Please provide a name."
+msgstr ""
+
+#: cleanbook.php:295
+msgid "Please provide an email."
+msgstr ""
+
+#: cleanbook.php:297
+msgid "Please provide a valid email : valid@email.com."
+msgstr ""
+
+#: cleanbook.php:301
+msgid "Please provide a phone."
+msgstr ""
+
+#: cleanbook.php:303
+msgid "Please provide a valid phone number : (514) 555-5555."
+msgstr ""
+
+#: cleanbook.php:307
+msgid "Please provide a date and time"
+msgstr ""
+
+#: cleanbook.php:309
+msgid "Please provide a valid date and time : 2014-10-21 16:00:00."
+msgstr ""
+
+#: cleanbook.php:322
+msgid "%s booked an appointment on %s."
+msgstr ""
+
+#: cleanbook.php:323
+msgid "Hi,"
+msgstr ""
+
+#: cleanbook.php:324
+msgid ""
+"You received this email to let you know that %s as booked an appointment "
+"from your website. Here is the information regarding this appointment:"
+msgstr ""
+
+#: cleanbook.php:331
+msgid ""
+"You can log in the administration panel of your site %s to confirm the "
+"appointment."
+msgstr ""
+
+#: view.php:11
+msgid "Previous"
+msgstr ""
+
+#: view.php:12
+msgid "Next"
+msgstr ""
+
+#: view.php:15
+msgid "Year"
+msgstr ""
+
+#: view.php:16
+msgid "Month"
+msgstr ""
+
+#: view.php:17
+msgid "Week"
+msgstr ""
+
+#: view.php:18
+msgid "Day"
+msgstr ""
+
+#: view.php:27
+msgid "Schedule an appointment"
+msgstr ""
+
+#: view.php:37
+msgid "First name Last name"
+msgstr ""
+
+#: view.php:45
+msgid "example@email.com"
+msgstr ""
+
+#: view.php:53
+msgid "(514) 555-5555"
+msgstr ""
+
+#: view.php:68
+msgid "Please add any note regarding the booking..."
+msgstr ""
+
+#: view.php:70
+msgid "Submit"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Cleanbook - Responsive plugin based on Bootstrap"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Cleanbook shows a form, i18n, so you can book a rendez-vous. This plugin is "
+"based on Fastbook."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "David Francoeur"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://davidfrancoeur.ca"
+msgstr ""
