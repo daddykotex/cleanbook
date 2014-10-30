@@ -21,18 +21,22 @@ define('CLEANBOOK_TABLE_APPOINTMENTS', 'cb_appointments');
 
 
 function cleanbook_bootstrap(){
-    //this handle can be changed to whatever our theme use to register / enqueue the Bootstrap's CSS file
-    $cssHandle = 'bootstrap-css';
-    //this handle can be changed to whatever our theme use to register / enqueue the Bootstrap's JS file
-    $jsHandle = 'bootstrap-js';
 
-     if (!wp_script_is( 'bootstrap-js')) { 
-        wp_register_script( $jsHandle, CLEANBOOK_URL . 'js/bootstrap.min.js', array('jquery'), '3.2.0', true );
-        wp_enqueue_script( $jsHandle );
-     }
-     if(!wp_style_is ( $cssHandle)){
-        wp_register_style( $cssHandle, CLEANBOOK_URL . 'css/bootstrap.min.css', array());
-        wp_enqueue_style( $cssHandle);
+    $options = get_option('cleanbook_options');
+    if($options['auto_register_bootstrap']){
+        //this handle can be changed to whatever our theme use to register / enqueue the Bootstrap's CSS file
+        $cssHandle = 'bootstrap-css';
+        //this handle can be changed to whatever our theme use to register / enqueue the Bootstrap's JS file
+        $jsHandle = 'bootstrap-js';
+
+         if (!wp_script_is( 'bootstrap-js')) { 
+            wp_register_script( $jsHandle, CLEANBOOK_URL . 'js/bootstrap.min.js', array('jquery'), '3.2.0', true );
+            wp_enqueue_script( $jsHandle );
+         }
+         if(!wp_style_is ( $cssHandle)){
+            wp_register_style( $cssHandle, CLEANBOOK_URL . 'css/bootstrap.min.css', array());
+            wp_enqueue_style( $cssHandle);
+         }
      }
 }
 
