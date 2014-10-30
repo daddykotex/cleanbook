@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cleanbook - Responsive plugin based on Bootstrap 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/cleanbook\n"
-"POT-Creation-Date: 2014-10-18 19:13:31+00:00\n"
+"POT-Creation-Date: 2014-10-25 13:06:39+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -12,137 +12,155 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: cleanbook.php:109 cleanbook.php:127
+#: admin/listdata.php:15 admin/settings.php:9
 msgid "Manage appointments"
 msgstr ""
 
-#: cleanbook.php:109
-msgid "Cleanbook appointments"
-msgstr ""
-
-#: cleanbook.php:119
+#: admin/listdata.php:21
 msgid "ID"
 msgstr ""
 
-#: cleanbook.php:120 cleanbook.php:141
+#: admin/listdata.php:22 cleanbook.php:134
 msgid "Fullname"
 msgstr ""
 
-#: cleanbook.php:121 cleanbook.php:143
-msgid "Phone"
-msgstr ""
-
-#: cleanbook.php:122 cleanbook.php:145
+#: admin/listdata.php:23 cleanbook.php:138
 msgid "Email"
 msgstr ""
 
-#: cleanbook.php:123 cleanbook.php:147
-msgid "Date and time"
+#: admin/listdata.php:24 cleanbook.php:136
+msgid "Phone"
 msgstr ""
 
-#: cleanbook.php:124 cleanbook.php:148
+#: admin/listdata.php:25 cleanbook.php:141
 msgid "Comment"
 msgstr ""
 
-#: cleanbook.php:125
+#: admin/listdata.php:26 cleanbook.php:140
+msgid "Date and time"
+msgstr ""
+
+#: admin/listdata.php:44
 msgid "Activate"
 msgstr ""
 
-#: cleanbook.php:126
+#: admin/listdata.php:45
 msgid "Deactivate"
 msgstr ""
 
-#: cleanbook.php:140
+#: admin/settings-page.php:2 admin/settings.php:10
+msgid "Cleanbook Settings"
+msgstr ""
+
+#: admin/settings.php:9
+msgid "Cleanbook Appointments"
+msgstr ""
+
+#: admin/settings.php:21
+msgid "General Settings"
+msgstr ""
+
+#: admin/settings.php:22
+msgid "Auto-register Bootstrap"
+msgstr ""
+
+#: admin/settings.php:29
+msgid ""
+"This is where you will find all of the general settings \n"
+"                    that affects the behavior of your Cleanbook plugin."
+msgstr ""
+
+#: cleanbook.php:133
 msgid "Schedule an appointment"
 msgstr ""
 
-#: cleanbook.php:142
+#: cleanbook.php:135
 msgid "First name Last name"
 msgstr ""
 
-#: cleanbook.php:144
+#: cleanbook.php:137
 msgid "(514) 555-5555"
 msgstr ""
 
-#: cleanbook.php:146
+#: cleanbook.php:139
 msgid "example@email.com"
 msgstr ""
 
-#: cleanbook.php:149
+#: cleanbook.php:142
 msgid "Please add any note regarding the booking..."
 msgstr ""
 
-#: cleanbook.php:150
+#: cleanbook.php:143
 msgid "Previous"
 msgstr ""
 
-#: cleanbook.php:151
+#: cleanbook.php:144
 msgid "Next"
 msgstr ""
 
-#: cleanbook.php:152
+#: cleanbook.php:145
 msgid "Today"
 msgstr ""
 
-#: cleanbook.php:153
+#: cleanbook.php:146
 msgid "Year"
 msgstr ""
 
-#: cleanbook.php:154
+#: cleanbook.php:147
 msgid "Month"
 msgstr ""
 
-#: cleanbook.php:155
+#: cleanbook.php:148
 msgid "Week"
 msgstr ""
 
-#: cleanbook.php:156
+#: cleanbook.php:149
 msgid "Day"
 msgstr ""
 
-#: cleanbook.php:157
+#: cleanbook.php:150
 msgid "Submit"
 msgstr ""
 
-#: cleanbook.php:197
+#: cleanbook.php:191
 msgid ""
 "The booking has been added. It will be reviewed and you'll be contacted for "
 "confirmation."
 msgstr ""
 
-#: cleanbook.php:198 cleanbook.php:297
+#: cleanbook.php:192 cleanbook.php:291
 msgid "An error has occured. Please contact the administrator."
 msgstr ""
 
-#: cleanbook.php:296
+#: cleanbook.php:290
 msgid "The booking was marked as %s."
 msgstr ""
 
-#: cleanbook.php:314
+#: cleanbook.php:308
 msgid "Please provide a name."
 msgstr ""
 
-#: cleanbook.php:318
+#: cleanbook.php:312
 msgid "Please provide an email."
 msgstr ""
 
-#: cleanbook.php:320
+#: cleanbook.php:314
 msgid "Please provide a valid email : valid@email.com."
 msgstr ""
 
-#: cleanbook.php:324
+#: cleanbook.php:318
 msgid "Please provide a phone."
 msgstr ""
 
-#: cleanbook.php:326
+#: cleanbook.php:320
 msgid "Please provide a valid phone number : (514) 555-5555."
 msgstr ""
 
-#: cleanbook.php:330
+#: cleanbook.php:324
 msgid "Please provide a date and time"
 msgstr ""
 
-#: cleanbook.php:332
+#: cleanbook.php:326
 msgid "Please provide a valid date and time : 2014-10-21 16:00:00."
 msgstr ""
 

@@ -6,23 +6,24 @@ global $wpdb;
 $appointments = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;
 $results = $wpdb->get_results("SELECT * FROM $appointments" , ARRAY_A); 
 ?>
+
 <div class="wrap">
 	<div class="loading">
 		<div class="loader"></div>
 	</div>
 
-	<h2><?php echo $translated_labels['listing-title']; ?></h2>
+	<h2><?php _e('Manage appointments', 'cleanbook'); ?></h2>
 
 	<div id="appointments">
 		<table rules="groups">
 			<thead  style="border-collapse: collapse;" >
 				<tr>
-					<th><?php echo $translated_labels['id']; ?></th>
-					<th><?php echo $translated_labels['name']; ?></th>
-					<th><?php echo $translated_labels['email']; ?></th>
-					<th><?php echo $translated_labels['phone']; ?></th>
-					<th><?php echo $translated_labels['comment']; ?></th>
-					<th><?php echo $translated_labels['datetime']; ?></th>
+					<th><?php _e('ID', 'cleanbook'); ?></th>
+					<th><?php _e( 'Fullname', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Email', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Phone', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Comment', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Date and time', 'cleanbook' ); ?></th>
 					<th></th>
 				</tr>
 			</thead>
@@ -40,8 +41,8 @@ $results = $wpdb->get_results("SELECT * FROM $appointments" , ARRAY_A);
 						<td class="app-datetime"><?php echo $appointment['datetime']; ?></td>
 						<?php
 						$active_label = $appointment['active'] ? 
-						$translated_labels['deactivate'] : 
-						$translated_labels['activate'];
+						__( 'Activate', 'cleanbook' ) : 
+						__( 'Deactivate', 'cleanbook' );
 						?>
 						<td class="app-active">
 							<input type="checkbox" 

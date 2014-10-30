@@ -120,19 +120,6 @@ Add admin page links
     An improvement would allow me to remove this non-sense.
 */
 function appointments(){   
-    $translated_labels = array(
-    'id'        =>  __('ID', 'cleanbook'),
-    'name'       => __( 'Fullname', 'cleanbook' ), 
-    'phone'       => __( 'Phone', 'cleanbook' ), 
-    'email'       => __( 'Email', 'cleanbook' ), 
-    'datetime'       => __( 'Date and time', 'cleanbook' ), 
-    'comment'       => __( 'Comment', 'cleanbook' ),
-    'activate'       => __( 'Activate', 'cleanbook' ),
-    'deactivate'       => __( 'Deactivate', 'cleanbook'),
-    'listing-title'       => __('Manage appointments', 'cleanbook')
-    );
-
-
     include_once(CLEANBOOK_ADMIN_FILE_PATH . '/listdata.php');
 }
 
@@ -141,28 +128,6 @@ Hook that is called on "[cleanbook]" shortcode
 */
 function appointment(){
     ob_start();
-
-    $translated_labels = array(
-        'form-title'       => __( 'Schedule an appointment', 'cleanbook' ), 
-        'name'       => __( 'Fullname', 'cleanbook' ), 
-        'name-placeholder'       => __( 'First name Last name', 'cleanbook' ), 
-        'phone'       => __( 'Phone', 'cleanbook' ), 
-        'phone-placeholder'       => __( '(514) 555-5555', 'cleanbook' ), 
-        'email'       => __( 'Email', 'cleanbook' ), 
-        'email-placeholder'       => __( 'example@email.com', 'cleanbook' ), 
-        'datetime'       => __( 'Date and time', 'cleanbook' ), 
-        'comment'       => __( 'Comment', 'cleanbook' ),
-        'comment-placeholder'       => __( 'Please add any note regarding the booking...', 'cleanbook' ),
-        'previous'       => __( 'Previous', 'cleanbook' ),
-        'next'       => __( 'Next', 'cleanbook' ),
-        'today'       => __( 'Today', 'cleanbook' ),
-        'year'       => __( 'Year', 'cleanbook' ),
-        'month'       => __( 'Month', 'cleanbook' ),
-        'week'       => __( 'Week', 'cleanbook' ),
-        'day'       => __( 'Day', 'cleanbook' ),
-        'submit'       => __( 'Submit', 'cleanbook' )
-        );
-
     include_once(CLEANBOOK_FILE_PATH . '/view.php');
     return ob_get_clean();
 }
