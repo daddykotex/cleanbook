@@ -134,6 +134,7 @@ function appointments(){
 Hook that is called on "[cleanbook]" shortcode
 */
 function appointment(){
+    ob_start();
 
     $translated_labels = array(
         'form-title'       => __( 'Schedule an appointment', 'cleanbook' ), 
@@ -156,7 +157,8 @@ function appointment(){
         'submit'       => __( 'Submit', 'cleanbook' )
         );
 
-include_once(CLEANBOOK_FILE_PATH . '/view.php');
+    include_once(CLEANBOOK_FILE_PATH . '/view.php');
+    return ob_get_clean();
 }
 add_shortcode( 'cleanbook', 'appointment' );
 

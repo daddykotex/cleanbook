@@ -20,3 +20,6 @@
 #cb-displaymessage{
 	display:none;
 }
+#calendar #cal-day-panel-hour{
+	z-index: 1;
+}
