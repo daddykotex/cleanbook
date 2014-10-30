@@ -42,7 +42,7 @@ function auto_register_bootstrap_string() {
     $options = get_option('cleanbook_options');
 
     echo "<input id='auto_register_bootstrap' name='cleanbook_options[auto_register_bootstrap]' 
-             type='checkbox' value='1'" . checked($options['auto_register_bootstrap'], 1, false ) . "' />";
+             type='checkbox' value='1'" . checked($options['auto_register_bootstrap'], 1, false ) . " />";
 }
 
 /*
@@ -58,7 +58,7 @@ function email_activation_string() {
     $options = get_option('cleanbook_options');
 
     echo "<input id='activate_email_notification' name='cleanbook_options[activate_email_notification]' 
-             type='checkbox' value='1'" . checked($options['activate_email_notification'], 1, false ) . "' />";
+             type='checkbox' value='1'" . checked($options['activate_email_notification'], 1, false ) . " />";
 }
 
 function email_string() {
@@ -75,13 +75,26 @@ function email_string() {
 */
 function validate_options($input){
     $newinput['auto_register_bootstrap'] = trim($input['auto_register_bootstrap']);
+    $newinput['activate_email_notification'] = trim($input['activate_email_notification']);
+    $newinput['email'] = trim($input['email']);
     
-    if($newinput['auto_register_bootstrap'] == 1 
-        || $newinput['auto_register_bootstrap'] == 0) {
+    if($newinput['auto_register_bootstrap'] == 1) {
+        $newinput['auto_register_bootstrap'] = $input['auto_register_bootstrap'];
+    } else {
         $newinput['auto_register_bootstrap'] = 0;
     }
+
+    if($newinput['activate_email_notification'] == 1) {
+        $newinput['activate_email_notification'] = $input['activate_email_notification'];
+    } else {
+        $newinput['activate_email_notification'] = 0;
+    }
+
+    if(!is_email($newinput['email'])) {
+        $newinput['email'] = '';
+    }
     
-    return $input;
+    return $newinput;
 }
 
 
