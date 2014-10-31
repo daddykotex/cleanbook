@@ -14,7 +14,9 @@ Shows a calendar of all the active appointments and a form to submit an appointm
 
 This plugin is very simple as of now. It shows a calendar of all the active appointments using [Bootstrap Calendar] and a form is available right next to it to allow registration of new events. The calendar only show active appointments.
 
-The administrator can activate/deactive event via a list in the admin section of your Wordpress installation.
+The administrator can activate/deactivate appointment via a list in the admin section of your Wordpress installation.
+
+The plugin is based upon another similar plugin called [Fastbook]. While not much was kept, I used it to learn and to build upon. Thanks a lot to the Fastbook team.
 
 == Installation ==
 You can find the plugin using your current WordPress installation by looking for it using the "cleanbook" keyword.
@@ -26,8 +28,7 @@ You can also manually install the plugin by uploading the content of the latest 
   - Upload the cleanbook folder to your wp-content/plugins folder on your WordPress installation. Make sure your install looks like this wp-content/plugins/cleanbook/cleanbook.php
   - Activate it from the plugins page in our WordPress installation
 
-
-== Usage ==
+=== Usage ===
 In order to use the plugin, you have to add the following shortcode in the page:
 ```
 [cleanbook]
@@ -66,10 +67,15 @@ The name I used is : wp-includes/js/underscore.min.js
 
 == Screenshots ==
 1. screenshot.png 
+<<<<<<< HEAD
 2. screenshot_french.png
+=======
+1. screenshot_french.png
+>>>>>>> master
 
 == Translators ==
 
 * French (fr) - David Francoeur
 
 [bootstrap calendar]:http://bootstrap-calendar.azurewebsites.net/
+[fastbook]:https://wordpress.org/plugins/fastbook-responsive-appointment-booking-and-scheduling-system/
