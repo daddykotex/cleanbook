@@ -22,6 +22,13 @@
 	width:40px;
 	height:40px;
 }
+#appointments table{
+	width:100%;
+}
+#appointments table th{
+	text-align: left;
+}
+
 #appointments table td, #appointments table th{
 	padding:2px 5px;
 }

@@ -26,7 +26,7 @@ $hasResults = !empty($results);
 					<th><?php _e( 'Phone', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Comment', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Date and time', 'cleanbook' ); ?></th>
-					<th></th>
+					<th><?php _e( 'Actions', 'cleanbook' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -36,11 +36,11 @@ $hasResults = !empty($results);
 					<tr id="appointment-<?php echo $appointment['id']; ?>" 
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
-						<td class="app-name"><?php echo $appointment['name']; ?></td>
-						<td class="app-email"><?php echo $appointment['email']; ?></td>
-						<td class="app-phone"><?php echo $appointment['phone']; ?></td>
-						<td class="app-comment"><?php echo $appointment['comment']; ?></td>
-						<td class="app-datetime"><?php echo $appointment['datetime']; ?></td>
+						<td class="app-name editable"><?php echo $appointment['name']; ?></td>
+						<td class="app-email editable"><?php echo $appointment['email']; ?></td>
+						<td class="app-phone editable"><?php echo $appointment['phone']; ?></td>
+						<td class="app-comment editable"><?php echo $appointment['comment']; ?></td>
+						<td class="app-datetime editable"><?php echo $appointment['datetime']; ?></td>
 						<?php
 						$active_label = $appointment['active'] ? 
 						__( 'Activate', 'cleanbook' ) : 
