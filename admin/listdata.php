@@ -37,11 +37,11 @@ $hasResults = !empty($results);
 						data-id="<?php echo $appointment['id']; ?>"
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
-						<td class="app-name editable" data-edit-type="text"><?php echo $appointment['name']; ?></td>
-						<td class="app-email editable" data-edit-type="text"><?php echo $appointment['email']; ?></td>
-						<td class="app-phone editable" data-edit-type="text"><?php echo $appointment['phone']; ?></td>
-						<td class="app-comment editable" data-edit-type="textarea"><?php echo $appointment['comment']; ?></td>
-						<td class="app-datetime editable" data-edit-type="datetime"><?php echo $appointment['datetime']; ?></td>
+						<td class="app-name editable" data-edit-type="text" data-edit-name="name"><?php echo $appointment['name']; ?></td>
+						<td class="app-email editable" data-edit-type="text" data-edit-name="email"><?php echo $appointment['email']; ?></td>
+						<td class="app-phone editable" data-edit-type="text" data-edit-name="phone"><?php echo $appointment['phone']; ?></td>
+						<td class="app-comment editable" data-edit-type="textarea" data-edit-name="comment"><?php echo $appointment['comment']; ?></td>
+						<td class="app-datetime editable" data-edit-type="datetime" data-edit-name="datetime"><?php echo $appointment['datetime']; ?></td>
 						<?php
 						$active_label = $appointment['active'] ? 
 						__( 'Activate', 'cleanbook' ) : 
@@ -102,13 +102,13 @@ jQuery(document).ready(function($) {
 	});
 
 	jQuery("tr > td > a.edit").click(function(e) {
+
 		var row = jQuery(this).parent().parent(); 
 		var id = row.attr("data-id");
+
 		var saving = jQuery(this).attr("data-editing") == "true";
-		alert("saving : " + saving);
 
 		if(saving){
-			toggleEditFields(row, false);
 			save(row);
 		}else {
 			toggleEditFields(row, true);
@@ -124,28 +124,37 @@ function toggleEditFields(row, on){
 		if(on){
 			var editElement;
 			var oldValue = jQuery(this).html();
+			var editName = jQuery(this).attr("data-edit-name");
 
 			switch (editType) {
 			    case "datetime":
-			    	editElement = "<input type='text' class='datetime' value='"+ oldValue +"' />";
+			    	editElement = jQuery("<input />")
+							    	.addClass("datetime")
+							    	.attr("value", oldValue)
+							    	.attr("type", "text");
 			        break;
 			    case "textarea":
-			    	editElement = "<textarea>"+ oldValue +"</textarea>";
+			    	editElement = jQuery("<textarea></textarea>")
+							    	.addClass("datetime")
+							    	.html(oldValue);
 			    	break;
 			    default:
-			    	editElement = "<input type='text' value='"+ oldValue +"' />";
+			    	editElement = jQuery("<input />")
+							    	.attr("value", oldValue);
 			        break;
 			}
-			jQuery(this).html(editElement);
+			editElement.attr("name", editName);
+			jQuery(this).empty();
+			jQuery(this).append(editElement);
 		} else {
-			var firstChild = jQuery(this).children()[0];
+			var firstChild = jQuery(this).children(":first");
 			var oldValue;
 			switch (editType) {
 			    case "textarea":
-			    	oldValue = jQuery(firstChild).html();
+			    	oldValue = firstChild.html();
 			    	break;
 			    default:
-			    	oldValue = jQuery(firstChild).attr("value");
+			    	oldValue = firstChild.attr("value");
 			        break;
 			}
 			jQuery(this).html(oldValue);
@@ -155,24 +164,23 @@ function toggleEditFields(row, on){
 }
 
 function save(row){
-	var data = jQuery("input, textarea", row).serialize();
-	alert(data);
-	return;
+	var appointmentData = jQuery("td.editable input, td.editable textarea", row).serializeArray();
+	appointmentData.push({name: 'action', value: "update_appointment"});
+
+	alert(appointmentData);
 
 	jQuery('.loading').show();	
 	jQuery.ajax({	
 		url: '<?php echo $admin_url; ?>',
 		type:'POST',
 		dataType:"json",
-		data: {
-			'action': "update_appointment",
-			'id': id,
-			'active': wasChecked
-		},
+		data: appointmentData,
 
 		success: function(response){
 			if(!response.success){
-				jQuery(this).attr('checked', wasChecked);
+
+			}else{
+				toggleEditFields(row, false);
 			}
 		},
 		error: function(){

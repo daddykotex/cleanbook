@@ -14,7 +14,7 @@
 	opacity: 0.5;
 }
 .loader{
-	background: url("../../img/loading.gif") center no-repeat;
+	background: url("../img/loading.gif") center no-repeat;
 	display: block;
 	float: none; 
 	position: relative; 
