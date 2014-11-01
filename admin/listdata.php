@@ -26,6 +26,7 @@ $hasResults = !empty($results);
 					<th><?php _e( 'Phone', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Comment', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Date and time', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Activated', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Actions', 'cleanbook' ); ?></th>
 				</tr>
 			</thead>
@@ -34,6 +35,7 @@ $hasResults = !empty($results);
 				foreach($results AS $key=>$appointment){ 
 					?>
 					<tr id="appointment-<?php echo $appointment['id']; ?>" 
+						data-id="<?php echo $appointment['id']; ?>"
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
 						<td class="app-name editable"><?php echo $appointment['name']; ?></td>
@@ -49,11 +51,11 @@ $hasResults = !empty($results);
 						<td class="app-active">
 							<input type="checkbox" 
 							<?php if($appointment['active']){ echo 'checked' ;} ?> 
-							data-id="<?php echo $appointment['id']; ?>"
 							/>
 						</a>
-					</td>
-				</tr>
+						</td>
+						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
+					</tr>
 				<?php
 				}
 				?> 
@@ -71,7 +73,7 @@ jQuery(document).ready(function($) {
 
 	jQuery('.app-active > input:checkbox').click(function(e) {
 
-		var id = jQuery(this).attr('data-id');
+		var id = jQuery(this).parent().parent().attr('data-id');
 		var wasChecked = jQuery(this).is(':checked');
 
 		jQuery('.loading').show();	
