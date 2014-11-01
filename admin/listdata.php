@@ -69,7 +69,7 @@ $hasResults = !empty($results);
 	</div><!-- #appoitnments -->
 </div><!-- wrap -->
 <script type="text/javascript">
-jQuery(document).ready(function($) { 
+jQuery(document).ready(function($) {
 
 	jQuery('.app-active > input:checkbox').click(function(e) {
 
@@ -134,6 +134,10 @@ function toggleEditFields(row, on){
 							    	.addClass("datetime")
 							    	.attr("value", oldValue)
 							    	.attr("type", "text");
+					jQuery(editElement).datetimepicker({ 
+   						minDate:'0',
+   						format: "Y-m-d H:i:s",
+ 					});	
 			        break;
 			    case "textarea":
 			    	editElement = jQuery("<textarea></textarea>")

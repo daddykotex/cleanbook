@@ -70,11 +70,6 @@ function cleanbook_scripts() {
     wp_localize_script( 'cleanbook', 'cleanbook_ajax', $cleanbook_ajax, '', true );    
 }
 add_action( 'wp_enqueue_scripts', 'cleanbook_scripts' );
-
-function cleanbook_admin_scripts(){
-    wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array());  
-}
-add_action( 'admin_enqueue_scripts', 'cleanbook_admin_scripts' );
 /*
     Load translations
 */

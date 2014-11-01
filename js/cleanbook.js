@@ -3,6 +3,7 @@ jQuery(document).ready(function($) {
 
 	jQuery('#cb-datetime').datetimepicker({ 
    		minDate:'0',
+   		format: "Y-m-d H:i:s",
  	});	
 	var list_appointments = cleanbook_ajax.ajax_url + "?action=" + cleanbook_ajax.action_listing;
 

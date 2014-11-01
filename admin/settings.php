@@ -1,7 +1,18 @@
 <?php
 
 
-add_action('admin_menu','cleanbook_admin_menu');
+
+function cleanbook_admin_scripts() {
+    //css
+    wp_enqueue_style('jquery-datetimepicker', CLEANBOOK_URL . 'css/jquery.datetimepicker.css', array());
+    
+    wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array()); 
+
+    //js
+    wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);   
+}
+
+add_action( 'admin_enqueue_scripts', 'cleanbook_admin_scripts' );
 
 
 function cleanbook_admin_menu()
@@ -11,6 +22,7 @@ function cleanbook_admin_menu()
         //call register settings function
     add_action( 'admin_init', 'register_settings' );
 }
+add_action('admin_menu','cleanbook_admin_menu');
 
 /*
     Register Cleanbook options
