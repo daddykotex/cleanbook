@@ -1,6 +1,5 @@
 <?php
 $admin_url = admin_url( 'admin-ajax.php' );
-$action = "toggle_active_status";
 
 global $wpdb;
 $appointments = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;
@@ -38,11 +37,11 @@ $hasResults = !empty($results);
 						data-id="<?php echo $appointment['id']; ?>"
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
-						<td class="app-name editable"><?php echo $appointment['name']; ?></td>
-						<td class="app-email editable"><?php echo $appointment['email']; ?></td>
-						<td class="app-phone editable"><?php echo $appointment['phone']; ?></td>
-						<td class="app-comment editable"><?php echo $appointment['comment']; ?></td>
-						<td class="app-datetime editable"><?php echo $appointment['datetime']; ?></td>
+						<td class="app-name editable" data-edit-type="text"><?php echo $appointment['name']; ?></td>
+						<td class="app-email editable" data-edit-type="text"><?php echo $appointment['email']; ?></td>
+						<td class="app-phone editable" data-edit-type="text"><?php echo $appointment['phone']; ?></td>
+						<td class="app-comment editable" data-edit-type="textarea"><?php echo $appointment['comment']; ?></td>
+						<td class="app-datetime editable" data-edit-type="datetime"><?php echo $appointment['datetime']; ?></td>
 						<?php
 						$active_label = $appointment['active'] ? 
 						__( 'Activate', 'cleanbook' ) : 
@@ -54,7 +53,7 @@ $hasResults = !empty($results);
 							/>
 						</a>
 						</td>
-						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
+						<td><a class="edit" data-editing="false" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
 					</tr>
 				<?php
 				}
@@ -82,7 +81,7 @@ jQuery(document).ready(function($) {
 			type:'POST',
 			dataType:"json",
 			data: {
-				'action': '<?php echo $action; ?>',
+				'action': "toggle_active_status",
 				'id': id,
 				'active': wasChecked
 			},
@@ -101,5 +100,88 @@ jQuery(document).ready(function($) {
 
 		});
 	});
+
+	jQuery("tr > td > a.edit").click(function(e) {
+		var row = jQuery(this).parent().parent(); 
+		var id = row.attr("data-id");
+		var saving = jQuery(this).attr("data-editing") == "true";
+		alert("saving : " + saving);
+
+		if(saving){
+			toggleEditFields(row, false);
+			save(row);
+		}else {
+			toggleEditFields(row, true);
+			jQuery(this).attr("data-editing", "true");
+		}
+	});
 });
+
+function toggleEditFields(row, on){
+	jQuery("td.editable", row).each(function(index, element){
+		var editType = jQuery(this).attr("data-edit-type");
+
+		if(on){
+			var editElement;
+			var oldValue = jQuery(this).html();
+
+			switch (editType) {
+			    case "datetime":
+			    	editElement = "<input type='text' class='datetime' value='"+ oldValue +"' />";
+			        break;
+			    case "textarea":
+			    	editElement = "<textarea>"+ oldValue +"</textarea>";
+			    	break;
+			    default:
+			    	editElement = "<input type='text' value='"+ oldValue +"' />";
+			        break;
+			}
+			jQuery(this).html(editElement);
+		} else {
+			var firstChild = jQuery(this).children()[0];
+			var oldValue;
+			switch (editType) {
+			    case "textarea":
+			    	oldValue = jQuery(firstChild).html();
+			    	break;
+			    default:
+			    	oldValue = jQuery(firstChild).attr("value");
+			        break;
+			}
+			jQuery(this).html(oldValue);
+		}
+	});
+
+}
+
+function save(row){
+	var data = jQuery("input, textarea", row).serialize();
+	alert(data);
+	return;
+
+	jQuery('.loading').show();	
+	jQuery.ajax({	
+		url: '<?php echo $admin_url; ?>',
+		type:'POST',
+		dataType:"json",
+		data: {
+			'action': "update_appointment",
+			'id': id,
+			'active': wasChecked
+		},
+
+		success: function(response){
+			if(!response.success){
+				jQuery(this).attr('checked', wasChecked);
+			}
+		},
+		error: function(){
+			jQuery(this).attr('checked', wasChecked);
+		},
+		complete: function() {
+			jQuery('.loading').hide(); 
+		}
+
+	});
+}
 </script>
