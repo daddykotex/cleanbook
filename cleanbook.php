@@ -106,12 +106,7 @@ register_deactivation_hook( __FILE__, 'cleanbook_uninstall' );
 Add admin page links
 */
 
-
    include_once(CLEANBOOK_ADMIN_FILE_PATH . '/settings.php');
-
-
-
-
 
 /*
     The reason for this array to exist is that the tools used to 
@@ -140,12 +135,7 @@ function cleanbook_booking() {
     global $wpdb;
     $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;  
 
-    $appointment = array();
-    $appointment['name'] = trim($_POST['name']);
-    $appointment['email']= trim($_POST['email']);
-    $appointment['phone']= trim($_POST['phone']);
-    $appointment['datetime']= trim($_POST['datetime']);
-    $appointment['comment']= trim($_POST['comment']);
+    $appointment = appointment_from_post();
 
     $errors = validate($appointment) ;
     if(empty($errors)){
@@ -177,7 +167,7 @@ function cleanbook_booking() {
             array(  'success'=> $success, 
                 'messages' => array(array('message' => $message))
                 ));
-    } else{
+    } else {
         echo json_encode(
             array(  'success'=> false, 
                 'messages' => $errors
@@ -268,7 +258,7 @@ function cleanbook_toggle_active_status() {
                         '%b',   // value type
                     ), 
                     array( '%d' ) 
-                );
+                ) !== false;
     $active_label = $active ? "active" : "inactive";
     $message = $success ? sprintf(__("The booking was marked as %s.", "cleanbook"), $active_label) :
     __("An error has occured. Please contact the administrator.", "cleanbook");
@@ -283,6 +273,59 @@ function cleanbook_toggle_active_status() {
 }
 
 add_action( 'wp_ajax_toggle_active_status', 'cleanbook_toggle_active_status' ); 
+
+/*
+Insert appointment function
+*/
+function cleanbook_update_appointment() {
+
+    $id =  trim($_POST['id']);
+
+    global $wpdb;
+    $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS; 
+
+    $appointment = appointment_from_post();
+
+    $errors = validate($appointment) ;
+    if(empty($errors)){
+
+        $success = $wpdb->update( 
+                        $appointment_table_name, 
+                        array( 
+                            'name' => $appointment['name'],
+                            'email' => $appointment['email'],
+                            'phone' => $appointment['phone'],
+                            'comment' => $appointment['comment'],
+                            'datetime' => $appointment['datetime'], //column and values to set
+                        ), 
+                        array( 'id' => $id ), //where
+                        array( 
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                        ), 
+                        array( '%d' ) 
+                    ) !== false;
+
+        $message = $success ? __("The booking has been updated.", "cleanbook"):
+        __("An error has occured. Please contact the administrator.", "cleanbook");
+        echo json_encode(
+            array(  'success'=> $success, 
+                'messages' => array(array('message' => $message))
+                ));
+    } else {
+        echo json_encode(
+                    array(  'success'=> false, 
+                        'messages' => $errors
+                        ));
+    }
+
+    die;
+}
+
+add_action( 'wp_ajax_update_appointment', 'cleanbook_update_appointment' ); 
 
 
 function validate($appointment){
@@ -334,5 +377,15 @@ function sendNotificationEmail($appointment){
 
          wp_mail( $to, $subject, $message, $headers ); 
     }
+}
+
+function appointment_from_post(){
+    $appointment = array();
+    $appointment['name'] = trim($_POST['name']);
+    $appointment['email']= trim($_POST['email']);
+    $appointment['phone']= trim($_POST['phone']);
+    $appointment['datetime']= trim($_POST['datetime']);
+    $appointment['comment']= trim($_POST['comment']);
+    return $appointment;
 }
 ?>

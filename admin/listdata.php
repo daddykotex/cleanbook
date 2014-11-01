@@ -35,6 +35,7 @@ $hasResults = !empty($results);
 					?>
 					<tr id="appointment-<?php echo $appointment['id']; ?>" 
 						data-id="<?php echo $appointment['id']; ?>"
+						data-editing="false" 
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
 						<td class="app-name editable" data-edit-type="text" data-edit-name="name"><?php echo $appointment['name']; ?></td>
@@ -53,7 +54,7 @@ $hasResults = !empty($results);
 							/>
 						</a>
 						</td>
-						<td><a class="edit" data-editing="false" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
+						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
 					</tr>
 				<?php
 				}
@@ -106,10 +107,10 @@ jQuery(document).ready(function($) {
 		var row = jQuery(this).parent().parent(); 
 		var id = row.attr("data-id");
 
-		var saving = jQuery(this).attr("data-editing") == "true";
+		var saving =  row.attr("data-editing") == "true";
 
 		if(saving){
-			save(row);
+			save(id, row);
 		}else {
 			toggleEditFields(row, true);
 			jQuery(this).attr("data-editing", "true");
@@ -120,6 +121,7 @@ jQuery(document).ready(function($) {
 function toggleEditFields(row, on){
 	jQuery("td.editable", row).each(function(index, element){
 		var editType = jQuery(this).attr("data-edit-type");
+
 
 		if(on){
 			var editElement;
@@ -159,37 +161,40 @@ function toggleEditFields(row, on){
 			}
 			jQuery(this).html(oldValue);
 		}
+
+		row.attr("data-editing", on);
 	});
 
 }
 
-function save(row){
-	var appointmentData = jQuery("td.editable input, td.editable textarea", row).serializeArray();
-	appointmentData.push({name: 'action', value: "update_appointment"});
+function save(id, row){
+	if(id){
+		var appointmentData = jQuery("td.editable input, td.editable textarea", row).serializeArray();
 
-	alert(appointmentData);
+		appointmentData.push({name: 'action', value: "update_appointment"});
+		appointmentData.push({name: 'id', value: id});
 
-	jQuery('.loading').show();	
-	jQuery.ajax({	
-		url: '<?php echo $admin_url; ?>',
-		type:'POST',
-		dataType:"json",
-		data: appointmentData,
+		jQuery('.loading').show();	
+		jQuery.ajax({	
+			url: '<?php echo $admin_url; ?>',
+			type:'POST',
+			dataType:"json",
+			data: appointmentData,
 
-		success: function(response){
-			if(!response.success){
+			success: function(response){
+				if(!response.success){
 
-			}else{
-				toggleEditFields(row, false);
+				}else{
+					toggleEditFields(row, false);
+				}
+			},
+			error: function(){
+			},
+			complete: function() {
+				jQuery('.loading').hide(); 
 			}
-		},
-		error: function(){
-			jQuery(this).attr('checked', wasChecked);
-		},
-		complete: function() {
-			jQuery('.loading').hide(); 
-		}
 
-	});
+		});
+	}	
 }
 </script>
