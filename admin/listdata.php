@@ -11,6 +11,7 @@ $hasResults = !empty($results);
 	<div class="loading">
 		<div class="loader"></div>
 	</div>
+	<div id="displaymessage"></div>
 
 	<h2><?php _e('Manage appointments', 'cleanbook'); ?></h2>
 
@@ -54,7 +55,7 @@ $hasResults = !empty($results);
 							/>
 						</a>
 						</td>
-						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>">edit</a></td>
+						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>"><span id="edit-icon" class="dashicons dashicons-edit"></span></a></td>
 					</tr>
 				<?php
 				}
@@ -157,9 +158,19 @@ function toggleEditFields(row, on){
 			var oldValue = firstChild.val();
 			jQuery(this).html(oldValue);
 		}
-
-		row.attr("data-editing", on);
 	});
+
+	row.attr("data-editing", on);
+
+	var editIcon = jQuery("#edit-icon", row);
+
+	editIcon.removeClass("dashicons-yes dashicons-edit");
+
+	if(on){
+		editIcon.addClass("dashicons-yes");
+	} else {
+		editIcon.addClass("dashicons-edit");
+	}
 
 }
 
@@ -170,7 +181,12 @@ function save(id, row){
 		appointmentData.push({name: 'action', value: "update_appointment"});
 		appointmentData.push({name: 'id', value: id});
 
-		jQuery('.loading').show();	
+		var displayMessage = jQuery("#displaymessage");
+
+		jQuery('.loading').show();
+		displayMessage.empty();
+		displayMessage.hide();
+
 		jQuery.ajax({	
 			url: '<?php echo $admin_url; ?>',
 			type:'POST',
@@ -178,10 +194,14 @@ function save(id, row){
 			data: appointmentData,
 
 			success: function(response){
-				if(!response.success){
-
-				}else{
+				if(response.success){
 					toggleEditFields(row, false);
+				}else{
+					response.messages.forEach(function(message, index) {
+						var messageToPrint = jQuery("<p></p>").html(message.message);
+						displayMessage.append(messageToPrint);
+					});
+					displayMessage.show();
 				}
 			},
 			error: function(){

@@ -23,7 +23,11 @@
 	height:40px;
 }
 #appointments table{
+	max-width:100%;
 	width:100%;
+}
+#appointments a{
+	text-decoration: none;	
 }
 #appointments table th{
 	text-align: left;
@@ -41,4 +45,8 @@
 }
 #appointments table thead {
 	border-bottom: 1px solid black;
+}
+#displaymessage{
+	color: #FF0000;
+	display: none;
 }
