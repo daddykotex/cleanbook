@@ -131,6 +131,7 @@ function cleanbook_booking() {
     $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;  
 
     $appointment = appointment_from_post();
+    $appointment = KSES_data($appointment);
 
     $errors = validate($appointment) ;
     if(empty($errors)){
@@ -280,6 +281,7 @@ function cleanbook_update_appointment() {
     $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS; 
 
     $appointment = appointment_from_post();
+    $appointment = KSES_data($appointment);
 
     $errors = validate($appointment) ;
     if(empty($errors)){
@@ -347,6 +349,24 @@ function validate($appointment){
         $errors[] = array('message' => __("Please provide a valid date and time : 2014-10-21 16:00:00.", "cleanbook"));
     }
     return $errors;
+}
+
+function KSES_data($data){
+    $valid = array(
+    'a' => array(
+        'href' => array(),
+        'title' => array()
+    ),
+    'br' => array(),
+    'em' => array(),
+    'strong' => array(),
+    );
+
+    foreach($data as $key=>$value){
+        $data[$key] = wp_kses( $value, $valid );
+    }
+
+    return $data;
 }
 
 /*

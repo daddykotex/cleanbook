@@ -154,15 +154,7 @@ function toggleEditFields(row, on){
 			jQuery(this).append(editElement);
 		} else {
 			var firstChild = jQuery(this).children(":first");
-			var oldValue;
-			switch (editType) {
-			    case "textarea":
-			    	oldValue = firstChild.html();
-			    	break;
-			    default:
-			    	oldValue = firstChild.attr("value");
-			        break;
-			}
+			var oldValue = firstChild.val();
 			jQuery(this).html(oldValue);
 		}
 
