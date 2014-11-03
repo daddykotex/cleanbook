@@ -24,6 +24,7 @@ function cleanbook_admin_scripts() {
         'language'  =>  $exploded_language[0],
         'country'  =>  $exploded_language[1],
         'modal_title_edit' => __('Edit appointment', 'cleanbook'),
+        'error_message' => __("An error has occured. Please contact the administrator.", "cleanbook")
         );
     wp_localize_script( 'cleanbook-admin', 'cleanbook_admin_ajax', $cleanbook_admin_ajax, '', true ); 
 }

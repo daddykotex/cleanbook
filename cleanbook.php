@@ -68,7 +68,8 @@ function cleanbook_scripts() {
         'language_country'  =>  $language,
         'language'  =>  $exploded_language[0],
         'country'  =>  $exploded_language[1],
-        'tmpl_path' =>  CLEANBOOK_URL . 'js/tmpls/'
+        'tmpl_path' =>  CLEANBOOK_URL . 'js/tmpls/',
+        'error_message' => __("An error has occured. Please contact the administrator.", "cleanbook")
         );
     wp_localize_script( 'cleanbook', 'cleanbook_ajax', $cleanbook_ajax, '', true );    
 }

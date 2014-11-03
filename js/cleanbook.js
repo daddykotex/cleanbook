@@ -90,6 +90,10 @@ jQuery(document).ready(function($) {
 				message.show();
 
 			},
+			error: function(){
+				message.html(cleanbook_ajax.error_message);
+				message.show();
+			}
 			complete:function(){
 				jQuery(".loading").hide();
 			}

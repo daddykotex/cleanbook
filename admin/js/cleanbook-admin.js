@@ -68,6 +68,8 @@ function save(displayMessageHandler, data){
 			}
 		},
 		error: function(){
+			var messageToPrint = jQuery("<p></p>").html(cleanbook_admin_ajax.error_message);
+			displayMessageHandler.append(messageToPrint);
 		},
 		complete: function() {
 			jQuery('.loading').hide(); 
