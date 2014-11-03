@@ -85,14 +85,17 @@
 </form>
 <script type="text/javascript">
 jQuery(document).ready(function($) {
+
   jQuery('#btn_appointment_save').click(function(e) {
     var data = jQuery("#edit_appointment").serializeArray();
     save(jQuery("#displaymessage"), data);
     return false;
   }); 
+
   jQuery('#btn_appointment_cancel').click(function(e) {
     tb_remove();
     return false;
   }); 
+  
 });
 </script>
