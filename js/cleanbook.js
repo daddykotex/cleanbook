@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
    		minDate:'0',
    		format: "Y-m-d H:i:s",
  	});	
- 	
+
 	var list_appointments = cleanbook_ajax.ajax_url + "?action=" + cleanbook_ajax.action_listing;
 
 	var calendar = jQuery('#calendar').calendar({
@@ -94,7 +94,7 @@ jQuery(document).ready(function($) {
 			error: function(){
 				message.html(cleanbook_ajax.error_message);
 				message.show();
-			}
+			},
 			complete:function(){
 				jQuery(".loading").hide();
 			}
