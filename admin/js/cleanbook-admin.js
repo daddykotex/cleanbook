@@ -57,6 +57,7 @@ function save(displayMessageHandler, data){
 
 		success: function(response){
 			if(response.success){
+				updateRow(response.result);
 				tb_remove();
 			}else{
 				response.messages.forEach(function(message, index) {
@@ -73,4 +74,19 @@ function save(displayMessageHandler, data){
 		}
 
 	});
+}
+function updateRow(updatedAppointment){
+	var row = jQuery("#appointment-" + updatedAppointment.id);
+
+	for(var property in updatedAppointment){
+		if(property != "active"){
+      		jQuery(".app-" + property, row).html(updatedAppointment[property]);
+  		} else {
+  			if(updatedAppointment[property] == 1){
+  				jQuery(".app-" + property + " > input:checkbox", row).attr("checked", "true");
+  			} else {
+  				jQuery(".app-" + property + " > input:checkbox", row).removeAttr("checked");
+  			}
+  		}
+   }
 }

@@ -38,13 +38,13 @@ $hasResults = !empty($results);
 						data-editing="false" 
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
-						<td class="app-name editable" data-edit-type="text" data-edit-name="name"><?php echo $appointment['name']; ?></td>
-						<td class="app-email editable" data-edit-type="text" data-edit-name="email"><?php echo $appointment['email']; ?></td>
-						<td class="app-phone editable" data-edit-type="text" data-edit-name="phone"><?php echo $appointment['phone']; ?></td>
-						<td class="app-comment editable" data-edit-type="textarea" data-edit-name="comment"><?php echo $appointment['comment']; ?></td>
-						<td class="app-datetime editable" data-edit-type="datetime" data-edit-name="datetime"><?php echo $appointment['datetime']; ?></td>
+						<td class="app-name"><?php echo $appointment['name']; ?></td>
+						<td class="app-email"><?php echo $appointment['email']; ?></td>
+						<td class="app-phone"><?php echo $appointment['phone']; ?></td>
+						<td class="app-comment"><?php echo $appointment['comment']; ?></td>
+						<td class="app-datetime"><?php echo $appointment['datetime']; ?></td>
 						<td class="app-active">
-							<input type="checkbox" 
+							<input type="checkbox" value="1"
 								<?php checked( 1, $appointment['active'] ); ?> 
 							/>
 						</a>

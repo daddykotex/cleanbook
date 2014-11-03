@@ -206,12 +206,16 @@ function cleanbook_update_appointment() {
                         ), 
                         array( '%d' ) 
                     ) !== false;
+        if($success){
+            $updatedAppointment = $wpdb->get_row("SELECT * FROM $appointment_table_name WHERE id = $id", ARRAY_A);
+        }
 
         $message = $success ? __("The booking has been updated.", "cleanbook"):
         __("An error has occured. Please contact the administrator.", "cleanbook");
         echo json_encode(
             array(  'success'=> $success, 
-                'messages' => array(array('message' => $message))
+                'messages' => array(array('message' => $message)),
+                'result' => $success ? $updatedAppointment : null
                 ));
     } else {
         echo json_encode(
