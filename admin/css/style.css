@@ -23,8 +23,10 @@
 	height:40px;
 }
 #appointments table{
-	max-width:100%;
 	width:100%;
+}
+#appointments table .app-phone{
+	min-width: 100px;
 }
 #appointments a{
 	text-decoration: none;	

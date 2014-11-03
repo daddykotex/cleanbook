@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Cleanbook - Responsive plugin based on Bootstrap 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/cleanbook\n"
 "POT-Creation-Date: 2014-11-03 04:02:54+00:00\n"
-"PO-Revision-Date: 2014-11-02 23:04-0500\n"
+"PO-Revision-Date: 2014-11-02 23:09-0500\n"
 "Last-Translator: david francoeur <dfrancoeur04@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -70,7 +70,7 @@ msgstr "Gestion des rendez-vous"
 
 #: admin/listdata.php:23
 msgid "ID"
-msgstr "Manage appointments"
+msgstr "ID"
 
 #: admin/listdata.php:29
 msgid "Activated"
