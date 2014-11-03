@@ -5,12 +5,9 @@
 function cleanbook_admin_scripts() {
     //css
     wp_enqueue_style('jquery-datetimepicker', CLEANBOOK_URL . 'css/jquery.datetimepicker.css', array());
-    wp_enqueue_style('thickbox');
     wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array()); 
 
     //js
-
-    wp_enqueue_script('thickbox');
     wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);   
 
     wp_enqueue_script('cleanbook-admin', CLEANBOOK_URL . 'admin/js/cleanbook-admin.js', array('jquery'),'', true);
@@ -27,6 +24,8 @@ function cleanbook_admin_scripts() {
         'error_message' => __("An error has occured. Please contact the administrator.", "cleanbook")
         );
     wp_localize_script( 'cleanbook-admin', 'cleanbook_admin_ajax', $cleanbook_admin_ajax, '', true ); 
+
+    add_thickbox();
 }
 
 add_action( 'admin_enqueue_scripts', 'cleanbook_admin_scripts' );
@@ -234,7 +233,6 @@ add_action( 'wp_ajax_update_appointment', 'cleanbook_update_appointment' );
     Show a form filled with the appointment information
 */
 function cleanbook_show_form() {
-
     $id =  trim($_GET['id']);
 
     global $wpdb;

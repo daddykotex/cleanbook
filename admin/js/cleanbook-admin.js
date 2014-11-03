@@ -37,7 +37,8 @@ jQuery(document).ready(function($) {
 		var id = row.attr("data-id");
 
 		tb_show(cleanbook_admin_ajax.modal_title_edit, cleanbook_admin_ajax.ajax_url + '?action=show_form&id=' + id);
-		return true;
+		
+		return false;
 	});
 });
 

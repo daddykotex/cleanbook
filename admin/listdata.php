@@ -1,5 +1,6 @@
 <?php
 $admin_url = admin_url( 'admin-ajax.php' );
+add_thickbox();
 
 global $wpdb;
 $appointments = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;

@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cleanbook - Responsive plugin based on Bootstrap 1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/cleanbook\n"
-"POT-Creation-Date: 2014-10-25 15:48:54+00:00\n"
-"PO-Revision-Date: 2014-10-25 11:53-0500\n"
+"POT-Creation-Date: 2014-11-03 04:02:54+00:00\n"
+"PO-Revision-Date: 2014-11-02 23:04-0500\n"
 "Last-Translator: david francoeur <dfrancoeur04@gmail.com>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -15,8 +15,56 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
+#: admin/form.php:8
+#: admin/listdata.php:24
+#: form.php:5
+#: functions.php:14
+msgid "Fullname"
+msgstr "Nom complet"
+
+#: admin/form.php:20
+#: admin/listdata.php:25
+#: form.php:13
+#: functions.php:15
+msgid "Email"
+msgstr "Courriel"
+
+#: admin/form.php:33
+#: admin/listdata.php:26
+#: form.php:21
+#: functions.php:16
+msgid "Phone"
+msgstr "Téléphone"
+
+#: admin/form.php:45
+#: admin/listdata.php:28
+#: form.php:29
+#: functions.php:17
+msgid "Date and time"
+msgstr "Date et heure"
+
+#: admin/form.php:57
+#: admin/listdata.php:27
+#: form.php:36
+#: functions.php:18
+msgid "Comment"
+msgstr "Commentaire"
+
+#: admin/form.php:66
+msgid "Activate"
+msgstr "Activer"
+
+#: admin/form.php:79
+#: form.php:41
+msgid "Submit"
+msgstr "Soumettre"
+
+#: admin/form.php:83
+msgid "Cancel"
+msgstr "Annuler"
+
 #: admin/listdata.php:16
-#: admin/settings.php:9
+#: admin/settings.php:36
 msgid "Manage appointments"
 msgstr "Gestion des rendez-vous"
 
@@ -24,141 +72,146 @@ msgstr "Gestion des rendez-vous"
 msgid "ID"
 msgstr "Manage appointments"
 
-#: admin/listdata.php:24
-#: cleanbook.php:325
-#: view.php:34
-msgid "Fullname"
-msgstr "Nom complet"
-
-#: admin/listdata.php:25
-#: cleanbook.php:326
-#: view.php:42
-msgid "Email"
-msgstr "Courriel"
-
-#: admin/listdata.php:26
-#: cleanbook.php:327
-#: view.php:50
-msgid "Phone"
-msgstr "Téléphone"
-
-#: admin/listdata.php:27
-#: cleanbook.php:329
-#: view.php:65
-msgid "Comment"
-msgstr "Commentaire"
-
-#: admin/listdata.php:28
-#: cleanbook.php:328
-#: view.php:58
-msgid "Date and time"
-msgstr "Date et heure"
-
-#: admin/listdata.php:46
-msgid "Activate"
+#: admin/listdata.php:29
+msgid "Activated"
 msgstr "Activer"
 
-#: admin/listdata.php:47
-msgid "Deactivate"
-msgstr "Désactiver"
+#: admin/listdata.php:30
+msgid "Actions"
+msgstr "Actions"
 
-#: admin/listdata.php:64
+#: admin/listdata.php:53
+msgid "Edit"
+msgstr "Modifier"
+
+#: admin/listdata.php:62
 msgid "No appointments were found."
 msgstr "Il n'y a pas de rendez-vous enregistré."
 
 #: admin/settings-page.php:2
-#: admin/settings.php:10
+#: admin/settings.php:37
 msgid "Cleanbook Settings"
 msgstr "Paramètres Cleanbook"
 
-#: admin/settings.php:9
-msgid "Cleanbook Appointments"
-msgstr "Rendez-vous Cleanbook"
-
 #: admin/settings.php:23
-msgid "General Settings"
-msgstr "Paramètres Cleanbook"
+msgid "Edit appointment"
+msgstr "Modifier le rendez-vous"
 
 #: admin/settings.php:24
-msgid "Auto-register Bootstrap"
-msgstr "Enregistrer Bootstrap automatiquement"
-
-#: admin/settings.php:27
-msgid "Email Notification Settings"
-msgstr "Paramètre de notification par courriel"
-
-#: admin/settings.php:28
-msgid "Activate email notification"
-msgstr "Activer la notification par courriel"
-
-#: admin/settings.php:29
-msgid "Email to notify"
-msgstr "Courriel de notification"
-
-#: admin/settings.php:36
-msgid "This is where you will find all of the general settingsthat affects the behavior of your Cleanbook plugin."
-msgstr "Vous retrouverez ici tous les paramètres généraux qui affecte le comportement de votre extension Cleanbook."
-
-#: admin/settings.php:52
-msgid "This is where you will find all of the settings regarding notification by email."
-msgstr "Cette section présente toutes les options concernant la notification par courriel."
-
-#: cleanbook.php:171
-msgid "The booking has been added. It will be reviewed and you'll be contacted for confirmation."
-msgstr "Un rendez-vous a été ajouté. Vous serez contacté pour confirmation."
-
-#: cleanbook.php:172
-#: cleanbook.php:274
+#: admin/settings.php:159
+#: admin/settings.php:214
+#: cleanbook.php:72
+#: cleanbook.php:164
 msgid "An error has occured. Please contact the administrator."
 msgstr "Une erreur est survenue. Veuillez contacter l'administrateur, merci."
 
-#: cleanbook.php:273
+#: admin/settings.php:36
+msgid "Cleanbook Appointments"
+msgstr "Rendez-vous Cleanbook"
+
+#: admin/settings.php:51
+msgid "General Settings"
+msgstr "Paramètres Cleanbook"
+
+#: admin/settings.php:52
+msgid "Auto-register Bootstrap"
+msgstr "Enregistrer Bootstrap automatiquement"
+
+#: admin/settings.php:55
+msgid "Email Notification Settings"
+msgstr "Paramètre de notification par courriel"
+
+#: admin/settings.php:56
+msgid "Activate email notification"
+msgstr "Activer la notification par courriel"
+
+#: admin/settings.php:57
+msgid "Email to notify"
+msgstr "Courriel de notification"
+
+#: admin/settings.php:64
+msgid "This is where you will find all of the general settingsthat affects the behavior of your Cleanbook plugin."
+msgstr "Vous retrouverez ici tous les paramètres généraux qui affecte le comportement de votre extension Cleanbook."
+
+#: admin/settings.php:80
+msgid "This is where you will find all of the settings regarding notification by email."
+msgstr "Cette section présente toutes les options concernant la notification par courriel."
+
+#: admin/settings.php:158
 msgid "The booking was marked as %s."
 msgstr "Le rendez-vous a été marqué comment étant %s."
 
-#: cleanbook.php:291
-msgid "Please provide a name."
-msgstr "Veuillez fournir un nom."
+#: admin/settings.php:213
+msgid "The booking has been updated."
+msgstr "Le rendez-vous a été mis à jour."
 
-#: cleanbook.php:295
-msgid "Please provide an email."
-msgstr "Veuillez fournir un courriel."
+#: admin/settings.php:247
+msgid "No appointment found with id [%s]"
+msgstr "Aucun rendez-vous trouvé avec le id [%s]"
 
-#: cleanbook.php:297
-msgid "Please provide a valid email : valid@email.com."
-msgstr "Veuillez fournir un courriel valide : valide@courriel.com."
+#: cleanbook.php:163
+msgid "The booking has been added. It will be reviewed and you'll be contacted for confirmation."
+msgstr "Un rendez-vous a été ajouté. Vous serez contacté pour confirmation."
 
-#: cleanbook.php:301
-msgid "Please provide a phone."
-msgstr "Veuillez fournir un numéro de téléphone."
+#: form.php:8
+msgid "First name Last name"
+msgstr "Prénom Nom"
 
-#: cleanbook.php:303
-msgid "Please provide a valid phone number : (514) 555-5555."
-msgstr "Veuillez fournir un numéro de téléphone valide (514) 555-5555."
+#: form.php:16
+msgid "example@email.com"
+msgstr "exemple@courriel.com"
 
-#: cleanbook.php:307
-msgid "Please provide a date and time"
-msgstr "Veuillez fournir une date et une heure."
+#: form.php:24
+msgid "(514) 555-5555"
+msgstr "(514) 555-5555"
 
-#: cleanbook.php:309
-msgid "Please provide a valid date and time : 2014-10-21 16:00:00."
-msgstr "Veuillez fournir une date et une heure valide  : 2014-10-21 16:00:00."
+#: form.php:39
+msgid "Please add any note regarding the booking..."
+msgstr "Veuillez ajouter les précisions concernant le rendez-vous ici..."
 
-#: cleanbook.php:322
+#: functions.php:11
 msgid "%s booked an appointment on %s."
 msgstr "%s a pris un rendez-vous sur %s."
 
-#: cleanbook.php:323
+#: functions.php:12
 msgid "Hi,"
 msgstr "Bonjour,"
 
-#: cleanbook.php:324
+#: functions.php:13
 msgid "You received this email to let you know that %s as booked an appointment from your website. Here is the information regarding this appointment:"
 msgstr "Vous avez reçu ce courriel pour vous informer que %s a pris un rendez-vous sur votre site web. Voici l'information concernant ce rendez vous :"
 
-#: cleanbook.php:331
+#: functions.php:20
 msgid "You can log in the administration panel of your site %s to confirm the appointment."
 msgstr "Vous pouvez vous connecter dans le panneau d'administration de votre site %s pour confirmer le rendez-vous."
+
+#: functions.php:52
+msgid "Please provide a name."
+msgstr "Veuillez fournir un nom."
+
+#: functions.php:56
+msgid "Please provide an email."
+msgstr "Veuillez fournir un courriel."
+
+#: functions.php:58
+msgid "Please provide a valid email : valid@email.com."
+msgstr "Veuillez fournir un courriel valide : valide@courriel.com."
+
+#: functions.php:62
+msgid "Please provide a phone."
+msgstr "Veuillez fournir un numéro de téléphone."
+
+#: functions.php:64
+msgid "Please provide a valid phone number : (514) 555-5555."
+msgstr "Veuillez fournir un numéro de téléphone valide (514) 555-5555."
+
+#: functions.php:68
+msgid "Please provide a date and time"
+msgstr "Veuillez fournir une date et une heure."
+
+#: functions.php:70
+msgid "Please provide a valid date and time : 2014-10-21 16:00:00."
+msgstr "Veuillez fournir une date et une heure valide  : 2014-10-21 16:00:00."
 
 #: view.php:11
 msgid "Previous"
@@ -188,26 +241,6 @@ msgstr "Jour"
 msgid "Schedule an appointment"
 msgstr "Prenez un rendez-vous"
 
-#: view.php:37
-msgid "First name Last name"
-msgstr "Prénom Nom"
-
-#: view.php:45
-msgid "example@email.com"
-msgstr "exemple@courriel.com"
-
-#: view.php:53
-msgid "(514) 555-5555"
-msgstr "(514) 555-5555"
-
-#: view.php:68
-msgid "Please add any note regarding the booking..."
-msgstr "Veuillez ajouter les précisions concernant le rendez-vous ici..."
-
-#: view.php:70
-msgid "Submit"
-msgstr "Soumettre"
-
 #. Plugin Name of the plugin/theme
 msgid "Cleanbook - Responsive plugin based on Bootstrap"
 msgstr "Cleanbook - Responsive plugin based on Bootstrap"
@@ -223,6 +256,9 @@ msgstr "David Francoeur"
 #. Author URI of the plugin/theme
 msgid "http://davidfrancoeur.ca"
 msgstr "http://davidfrancoeur.ca"
+
+#~ msgid "Deactivate"
+#~ msgstr "Désactiver"
 
 #~ msgid "Today"
 #~ msgstr "Aujourd'hui"
