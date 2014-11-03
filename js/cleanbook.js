@@ -2,13 +2,14 @@
 jQuery(document).ready(function($) { 
 
 	jQuery('#cb-datetime').datetimepicker({ 
+		lang: cleanbook_ajax.language,
    		minDate:'0',
    		format: "Y-m-d H:i:s",
  	});	
 	var list_appointments = cleanbook_ajax.ajax_url + "?action=" + cleanbook_ajax.action_listing;
 
 	var calendar = jQuery('#calendar').calendar({
-		language: cleanbook_ajax.language,
+		language: cleanbook_ajax.language_country,
 		tmpl_path: cleanbook_ajax.tmpl_path,
 		first_day: 2,
 		view: 'month', 

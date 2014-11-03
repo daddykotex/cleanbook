@@ -5,11 +5,27 @@
 function cleanbook_admin_scripts() {
     //css
     wp_enqueue_style('jquery-datetimepicker', CLEANBOOK_URL . 'css/jquery.datetimepicker.css', array());
-    
+    wp_enqueue_style('thickbox');
     wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array()); 
 
     //js
+
+    wp_enqueue_script('thickbox');
     wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);   
+
+    wp_enqueue_script('cleanbook-admin', CLEANBOOK_URL . 'admin/js/cleanbook-admin.js', array('jquery'),'', true);
+    
+    $language = get_bloginfo('language');
+    $exploded_language = explode("-", $language);
+
+    $cleanbook_admin_ajax = array( 
+        'ajax_url' => admin_url( 'admin-ajax.php' ),
+        'language_country'  =>  $language,
+        'language'  =>  $exploded_language[0],
+        'country'  =>  $exploded_language[1],
+        'modal_title_edit' => __('Edit appointment', 'cleanbook'),
+        );
+    wp_localize_script( 'cleanbook-admin', 'cleanbook_admin_ajax', $cleanbook_admin_ajax, '', true ); 
 }
 
 add_action( 'admin_enqueue_scripts', 'cleanbook_admin_scripts' );
@@ -108,6 +124,128 @@ function validate_options($input){
     
     return $newinput;
 }
+
+
+/*
+    Activate or deactivate an appointment
+*/
+function cleanbook_toggle_active_status() {
+
+    $id =  trim($_POST['id']);
+    $active = trim($_POST['active']);
+
+    if($active == "false"){
+        $active = 0;
+    } else if($active == "true"){
+        $active = 1;
+    }
+
+    global $wpdb;
+    $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;   
+
+    $success = $wpdb->update( 
+                    $appointment_table_name, 
+                    array( 
+                        'active' => $active, //column and values to set
+                    ), 
+                    array( 'id' => $id ), //where
+                    array( 
+                        '%b',   // value type
+                    ), 
+                    array( '%d' ) 
+                ) !== false;
+    $active_label = $active ? "active" : "inactive";
+    $message = $success ? sprintf(__("The booking was marked as %s.", "cleanbook"), $active_label) :
+    __("An error has occured. Please contact the administrator.", "cleanbook");
+
+    echo json_encode(
+        array(  'success'=> $success, 
+                'errors' => $message
+        )
+    );
+
+    die;
+}
+
+add_action( 'wp_ajax_toggle_active_status', 'cleanbook_toggle_active_status' ); 
+
+/*
+    Update an existing appointment
+*/
+function cleanbook_update_appointment() {
+
+    $id =  trim($_POST['id']);
+
+    $appointment = appointment_from_post();
+    $appointment = KSES_data($appointment);
+
+    $errors = validate($appointment) ;
+    if(empty($errors)){
+
+        global $wpdb;
+        $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS; 
+
+        $success = $wpdb->update( 
+                        $appointment_table_name, 
+                        array( 
+                            'name' => $appointment['name'],
+                            'email' => $appointment['email'],
+                            'phone' => $appointment['phone'],
+                            'comment' => $appointment['comment'],
+                            'datetime' => $appointment['datetime'], //column and values to set
+                            'active' => $appointment['active'],
+                        ), 
+                        array( 'id' => $id ), //where
+                        array( 
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%s',   // value type
+                            '%b',
+                        ), 
+                        array( '%d' ) 
+                    ) !== false;
+
+        $message = $success ? __("The booking has been updated.", "cleanbook"):
+        __("An error has occured. Please contact the administrator.", "cleanbook");
+        echo json_encode(
+            array(  'success'=> $success, 
+                'messages' => array(array('message' => $message))
+                ));
+    } else {
+        echo json_encode(
+                    array(  'success'=> false, 
+                        'messages' => $errors
+                        ));
+    }
+
+    die;
+}
+
+add_action( 'wp_ajax_update_appointment', 'cleanbook_update_appointment' ); 
+
+/*
+    Show a form filled with the appointment information
+*/
+function cleanbook_show_form() {
+
+    $id =  trim($_GET['id']);
+
+    global $wpdb;
+    $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS; 
+
+    $currentAppointment = $wpdb->get_row("SELECT * FROM $appointment_table_name WHERE id = $id", ARRAY_A);
+    if($currentAppointment != null){
+        ob_start();
+        include_once(CLEANBOOK_ADMIN_FILE_PATH . '/form.php');
+        echo ob_get_clean();
+    } else {
+        echo sprintf(__('No appointment found with id [%s]', 'cleanbook'), $id);
+    }
+}
+
+add_action( 'wp_ajax_show_form', 'cleanbook_show_form' ); 
 
 
 function settings_page(){

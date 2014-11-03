@@ -11,7 +11,6 @@ $hasResults = !empty($results);
 	<div class="loading">
 		<div class="loader"></div>
 	</div>
-	<div id="displaymessage"></div>
 
 	<h2><?php _e('Manage appointments', 'cleanbook'); ?></h2>
 
@@ -44,14 +43,9 @@ $hasResults = !empty($results);
 						<td class="app-phone editable" data-edit-type="text" data-edit-name="phone"><?php echo $appointment['phone']; ?></td>
 						<td class="app-comment editable" data-edit-type="textarea" data-edit-name="comment"><?php echo $appointment['comment']; ?></td>
 						<td class="app-datetime editable" data-edit-type="datetime" data-edit-name="datetime"><?php echo $appointment['datetime']; ?></td>
-						<?php
-						$active_label = $appointment['active'] ? 
-						__( 'Activate', 'cleanbook' ) : 
-						__( 'Deactivate', 'cleanbook' );
-						?>
 						<td class="app-active">
 							<input type="checkbox" 
-							<?php if($appointment['active']){ echo 'checked' ;} ?> 
+								<?php checked( 1, $appointment['active'] ); ?> 
 							/>
 						</a>
 						</td>
@@ -69,148 +63,3 @@ $hasResults = !empty($results);
 		?>
 	</div><!-- #appoitnments -->
 </div><!-- wrap -->
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-
-	jQuery('.app-active > input:checkbox').click(function(e) {
-
-		var id = jQuery(this).parent().parent().attr('data-id');
-		var wasChecked = jQuery(this).is(':checked');
-
-		jQuery('.loading').show();	
-		jQuery.ajax({	
-			url: '<?php echo $admin_url; ?>',
-			type:'POST',
-			dataType:"json",
-			data: {
-				'action': "toggle_active_status",
-				'id': id,
-				'active': wasChecked
-			},
-
-			success: function(response){
-				if(!response.success){
-					jQuery(this).attr('checked', wasChecked);
-				}
-			},
-			error: function(){
-				jQuery(this).attr('checked', wasChecked);
-			},
-			complete: function() {
-				jQuery('.loading').hide(); 
-			}
-
-		});
-	});
-
-	jQuery("tr > td > a.edit").click(function(e) {
-
-		var row = jQuery(this).parent().parent(); 
-		var id = row.attr("data-id");
-
-		var saving =  row.attr("data-editing") == "true";
-
-		if(saving){
-			save(id, row);
-		}else {
-			toggleEditFields(row, true);
-			jQuery(this).attr("data-editing", "true");
-		}
-	});
-});
-
-function toggleEditFields(row, on){
-	jQuery("td.editable", row).each(function(index, element){
-		var editType = jQuery(this).attr("data-edit-type");
-
-
-		if(on){
-			var editElement;
-			var oldValue = jQuery(this).html();
-			var editName = jQuery(this).attr("data-edit-name");
-
-			switch (editType) {
-			    case "datetime":
-			    	editElement = jQuery("<input />")
-							    	.addClass("datetime")
-							    	.attr("value", oldValue)
-							    	.attr("type", "text");
-					jQuery(editElement).datetimepicker({ 
-   						minDate:'0',
-   						format: "Y-m-d H:i:s",
- 					});	
-			        break;
-			    case "textarea":
-			    	editElement = jQuery("<textarea></textarea>")
-							    	.addClass("datetime")
-							    	.html(oldValue);
-			    	break;
-			    default:
-			    	editElement = jQuery("<input />")
-							    	.attr("value", oldValue);
-			        break;
-			}
-			editElement.attr("name", editName);
-			jQuery(this).empty();
-			jQuery(this).append(editElement);
-		} else {
-			var firstChild = jQuery(this).children(":first");
-			var oldValue = firstChild.val();
-			jQuery(this).html(oldValue);
-		}
-	});
-
-	row.attr("data-editing", on);
-
-	var editIcon = jQuery("#edit-icon", row);
-
-	editIcon.removeClass("dashicons-yes dashicons-edit");
-
-	if(on){
-		editIcon.addClass("dashicons-yes");
-	} else {
-		editIcon.addClass("dashicons-edit");
-	}
-
-}
-
-function save(id, row){
-	if(id){
-		var appointmentData = jQuery("td.editable input, td.editable textarea", row).serializeArray();
-
-		appointmentData.push({name: 'action', value: "update_appointment"});
-		appointmentData.push({name: 'id', value: id});
-
-		var displayMessage = jQuery("#displaymessage");
-
-		jQuery('.loading').show();
-		displayMessage.empty();
-		displayMessage.hide();
-
-		jQuery.ajax({	
-			url: '<?php echo $admin_url; ?>',
-			type:'POST',
-			dataType:"json",
-			data: appointmentData,
-
-			success: function(response){
-				if(response.success){
-					toggleEditFields(row, false);
-				}else{
-					response.messages.forEach(function(message, index) {
-						var messageToPrint = jQuery("<p></p>").html(message.message);
-						displayMessage.append(messageToPrint);
-					});
-					displayMessage.show();
-				}
-			},
-			error: function(){
-			},
-			complete: function() {
-				jQuery('.loading').hide(); 
-			}
-
-		});
-	}	
-}
-</script>
