@@ -11,6 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Shows a calendar of all the active appointments and a form to submit an appointment.
 
 == Description ==
+
 This plugin is very simple as of now. It shows a calendar of all the active appointments using [Bootstrap Calendar](http://bootstrap-calendar.azurewebsites.net/) and a form is available right next to it to allow registration of new events. The calendar only show active appointments.
 
 The administrator can activate/deactivate appointment via a list in the admin section of your Wordpress installation.
@@ -31,7 +32,6 @@ Note that this plugin heavily depends on Bootsrap 3.2 so make sure a container i
 </div>
 ```
 
-
 === Bootstrap 3.2 ===
 This plugin uses Bootstrap to render properly. If the plugin can't find the Bootstrap CSS and JS files, it will add them automatically. If your theme already import those files, you can either turn that option off from the admin panel or you can prevent it by changing the handle used by the plugin to look for the files by the one your theme is using.
 
@@ -46,6 +46,7 @@ By :
     $jsHandle = 'mytheme-bootstrap-js';
 ```
 This way the plugin won't reimport the files. It is possible that your theme import the CSS using the `@Import` instruction of your style.css, I'm working on a setting option that would be used to deactivate this auto-import behavior of the plugin.
+
 
 === Translators ===
 

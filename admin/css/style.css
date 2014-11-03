@@ -14,7 +14,7 @@
 	opacity: 0.5;
 }
 .loader{
-	background: url("../../img/loading.gif") center no-repeat;
+	background: url("../img/loading.gif") center no-repeat;
 	display: block;
 	float: none; 
 	position: relative; 
@@ -22,6 +22,32 @@
 	width:40px;
 	height:40px;
 }
+#edit_appointment table{
+	width:100%;
+}
+#edit_appointment table input[type=text], 
+#edit_appointment table input[type=email], 
+#edit_appointment table textarea{
+	width:100%;
+}
+
+.xdsoft_datetimepicker{
+	z-index: 100051; /* just above ThickBox z-index*/
+}
+
+#appointments table{
+	width:100%;
+}
+#appointments table .app-phone{
+	min-width: 100px;
+}
+#appointments a{
+	text-decoration: none;	
+}
+#appointments table th{
+	text-align: left;
+}
+
 #appointments table td, #appointments table th{
 	padding:2px 5px;
 }
@@ -34,4 +60,8 @@
 }
 #appointments table thead {
 	border-bottom: 1px solid black;
+}
+#displaymessage{
+	color: #FF0000;
+	display: none;
 }

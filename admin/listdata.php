@@ -1,6 +1,6 @@
 <?php
 $admin_url = admin_url( 'admin-ajax.php' );
-$action = "toggle_active_status";
+add_thickbox();
 
 global $wpdb;
 $appointments = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;
@@ -26,7 +26,8 @@ $hasResults = !empty($results);
 					<th><?php _e( 'Phone', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Comment', 'cleanbook' ); ?></th>
 					<th><?php _e( 'Date and time', 'cleanbook' ); ?></th>
-					<th></th>
+					<th><?php _e( 'Activated', 'cleanbook' ); ?></th>
+					<th><?php _e( 'Actions', 'cleanbook' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -34,6 +35,8 @@ $hasResults = !empty($results);
 				foreach($results AS $key=>$appointment){ 
 					?>
 					<tr id="appointment-<?php echo $appointment['id']; ?>" 
+						data-id="<?php echo $appointment['id']; ?>"
+						data-editing="false" 
 						class="<?php echo $key % 2 == 0 ? 'even' : 'uneven'; ?>">
 						<td class="app-id"><?php echo $appointment['id']; ?></td>
 						<td class="app-name"><?php echo $appointment['name']; ?></td>
@@ -41,19 +44,14 @@ $hasResults = !empty($results);
 						<td class="app-phone"><?php echo $appointment['phone']; ?></td>
 						<td class="app-comment"><?php echo $appointment['comment']; ?></td>
 						<td class="app-datetime"><?php echo $appointment['datetime']; ?></td>
-						<?php
-						$active_label = $appointment['active'] ? 
-						__( 'Activate', 'cleanbook' ) : 
-						__( 'Deactivate', 'cleanbook' );
-						?>
 						<td class="app-active">
-							<input type="checkbox" 
-							<?php if($appointment['active']){ echo 'checked' ;} ?> 
-							data-id="<?php echo $appointment['id']; ?>"
+							<input type="checkbox" value="1"
+								<?php checked( 1, $appointment['active'] ); ?> 
 							/>
 						</a>
-					</td>
-				</tr>
+						</td>
+						<td><a class="edit" href="#" alt="<?php _e('Edit', 'cleanbook'); ?>"><span id="edit-icon" class="dashicons dashicons-edit"></span></a></td>
+					</tr>
 				<?php
 				}
 				?> 
@@ -66,38 +64,3 @@ $hasResults = !empty($results);
 		?>
 	</div><!-- #appoitnments -->
 </div><!-- wrap -->
-<script type="text/javascript">
-jQuery(document).ready(function($) { 
-
-	jQuery('.app-active > input:checkbox').click(function(e) {
-
-		var id = jQuery(this).attr('data-id');
-		var wasChecked = jQuery(this).is(':checked');
-
-		jQuery('.loading').show();	
-		jQuery.ajax({	
-			url: '<?php echo $admin_url; ?>',
-			type:'POST',
-			dataType:"json",
-			data: {
-				'action': '<?php echo $action; ?>',
-				'id': id,
-				'active': wasChecked
-			},
-
-			success: function(response){
-				if(!response.success){
-					jQuery(this).attr('checked', wasChecked);
-				}
-			},
-			error: function(){
-				jQuery(this).attr('checked', wasChecked);
-			},
-			complete: function() {
-				jQuery('.loading').hide(); 
-			}
-
-		});
-	});
-});
-</script>

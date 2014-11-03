@@ -51,6 +51,7 @@ function cleanbook_scripts() {
     //js
     wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);
     $language = get_bloginfo('language');
+    $exploded_language = explode("-", $language);
 
     if($language != "en-US"){
         wp_enqueue_script('calendar-i18n', CLEANBOOK_URL . 'js/language/' . $language . '.js', array('jquery', 'underscore'),'', true);
@@ -64,17 +65,15 @@ function cleanbook_scripts() {
         'ajax_url' => admin_url( 'admin-ajax.php' ),
         'action_booking' => 'cleanbook_booking',
         'action_listing' => 'cleanbook_listing',
-        'language'  =>  $language,
-        'tmpl_path' =>  CLEANBOOK_URL . 'js/tmpls/'
+        'language_country'  =>  $language,
+        'language'  =>  $exploded_language[0],
+        'country'  =>  $exploded_language[1],
+        'tmpl_path' =>  CLEANBOOK_URL . 'js/tmpls/',
+        'error_message' => __("An error has occured. Please contact the administrator.", "cleanbook")
         );
     wp_localize_script( 'cleanbook', 'cleanbook_ajax', $cleanbook_ajax, '', true );    
 }
 add_action( 'wp_enqueue_scripts', 'cleanbook_scripts' );
-
-function cleanbook_admin_scripts(){
-    wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array());  
-}
-add_action( 'admin_enqueue_scripts', 'cleanbook_admin_scripts' );
 /*
     Load translations
 */
@@ -103,15 +102,12 @@ function cleanbook_uninstall() {
 register_deactivation_hook( __FILE__, 'cleanbook_uninstall' );
 
 /*
-Add admin page links
+    include files
 */
-
-
-   include_once(CLEANBOOK_ADMIN_FILE_PATH . '/settings.php');
-
-
-
-
+//Add required functions
+include_once(CLEANBOOK_FILE_PATH . '/functions.php');
+//Add admin page
+include_once(CLEANBOOK_ADMIN_FILE_PATH . '/settings.php');
 
 /*
     The reason for this array to exist is that the tools used to 
@@ -140,12 +136,8 @@ function cleanbook_booking() {
     global $wpdb;
     $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;  
 
-    $appointment = array();
-    $appointment['name'] = trim($_POST['name']);
-    $appointment['email']= trim($_POST['email']);
-    $appointment['phone']= trim($_POST['phone']);
-    $appointment['datetime']= trim($_POST['datetime']);
-    $appointment['comment']= trim($_POST['comment']);
+    $appointment = appointment_from_post();
+    $appointment = KSES_data($appointment);
 
     $errors = validate($appointment) ;
     if(empty($errors)){
@@ -171,13 +163,13 @@ function cleanbook_booking() {
         $message = $success ? __("The booking has been added. It will be reviewed and you'll be contacted for confirmation.", "cleanbook"):
         __("An error has occured. Please contact the administrator.", "cleanbook");
         if($success){
-            sendNotificationEmail($appointment);
+            send_notification_email($appointment);
         }
         echo json_encode(
             array(  'success'=> $success, 
                 'messages' => array(array('message' => $message))
                 ));
-    } else{
+    } else {
         echo json_encode(
             array(  'success'=> false, 
                 'messages' => $errors
@@ -239,100 +231,4 @@ function cleanbook_fetch_appointments($active_only) {
 
 add_action( 'wp_ajax_nopriv_cleanbook_listing', 'cleanbook_fetch_active_appointments' ); 
 add_action( 'wp_ajax_cleanbook_listing', 'cleanbook_fetch_all_appointments' ); 
-
-
-/*
-Insert appointment function
-*/
-function cleanbook_toggle_active_status() {
-
-    $id =  trim($_POST['id']);
-    $active = trim($_POST['active']);
-
-    if($active == "false"){
-        $active = 0;
-    } else if($active == "true"){
-        $active = 1;
-    }
-
-    global $wpdb;
-    $appointment_table_name = $wpdb->prefix . CLEANBOOK_TABLE_APPOINTMENTS;   
-
-    $success = $wpdb->update( 
-                    $appointment_table_name, 
-                    array( 
-                        'active' => $active, //column and values to set
-                    ), 
-                    array( 'id' => $id ), //where
-                    array( 
-                        '%b',   // value type
-                    ), 
-                    array( '%d' ) 
-                );
-    $active_label = $active ? "active" : "inactive";
-    $message = $success ? sprintf(__("The booking was marked as %s.", "cleanbook"), $active_label) :
-    __("An error has occured. Please contact the administrator.", "cleanbook");
-
-    echo json_encode(
-        array(  'success'=> $success, 
-                'errors' => $message
-        )
-    );
-
-    die;
-}
-
-add_action( 'wp_ajax_toggle_active_status', 'cleanbook_toggle_active_status' ); 
-
-
-function validate($appointment){
-    $errors = array();
-    if(empty($appointment['name'])){
-        $errors[] = array('message' => __("Please provide a name.", "cleanbook"));
-    }
-
-    if(empty($appointment['email'])){
-        $errors[] = array('message' => __("Please provide an email.", "cleanbook"));
-    } else if (!is_email($appointment['email'])){
-        $errors[] = array('message' => __("Please provide a valid email : valid@email.com.", "cleanbook"));
-    }
-
-    if(empty($appointment['phone'])){
-        $errors[] = array('message' => __("Please provide a phone.", "cleanbook"));
-    } else if (!preg_match("/^\([0-9]{3}\) [0-9]{3}-[0-9]{4}$/", $appointment['phone'])){
-        $errors[] = array('message' => __("Please provide a valid phone number : (514) 555-5555.", "cleanbook"));
-    }
-
-    if(empty($appointment['datetime'])){
-        $errors[] = array('message' => __("Please provide a date and time", "cleanbook"));
-    } else if (!strtotime($appointment['datetime'])){
-        $errors[] = array('message' => __("Please provide a valid date and time : 2014-10-21 16:00:00.", "cleanbook"));
-    }
-    return $errors;
-}
-
-/*
-    Sends an email, if the option is activated, to the specified email address.
-*/
-function sendNotificationEmail($appointment){
-
-    $options = get_option('cleanbook_options');
-    if($options['activate_email_notification'] && !empty($options['email'])){
-        $to = $options['email'];
-        $subject = sprintf(__('%s booked an appointment on %s.', 'cleanbook'), $appointment['name'], SITE_URL);
-        $message =  __('Hi,') . '<br /><br />';
-        $message .= sprintf(__('You received this email to let you know that %s as booked an appointment from your website. Here is the information regarding this appointment:'), $appointment['name']) . '<br /><br />';
-        $message .= __('Fullname', 'cleanbook') . ' : ' . $appointment['name'] . '<br />';
-        $message .= __('Email', 'cleanbook') . ' : ' . $appointment['email'] . '<br />';
-        $message .= __('Phone', 'cleanbook') . ' : ' . $appointment['phone'] . '<br />';
-        $message .= __('Date and time', 'cleanbook') . ' : ' . $appointment['datetime'] . '<br />';
-        $message .= __('Comment', 'cleanbook') . ' : ' . $appointment['comment'] . '<br /><br />';
-
-        $message .= sprintf(__('You can log in the administration panel of your site %s to confirm the appointment.'), get_option('blogname'));
-
-        $headers[] = "Content-type: text/html";
-
-         wp_mail( $to, $subject, $message, $headers ); 
-    }
-}
 ?>
