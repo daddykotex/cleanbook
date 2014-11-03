@@ -86,6 +86,12 @@
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 
+  jQuery('#cb-datetime').datetimepicker({ 
+    lang: cleanbook_admin_ajax.language,
+      minDate:'0',
+      format: "Y-m-d H:i:s",
+  });
+
   jQuery('#btn_appointment_save').click(function(e) {
     var data = jQuery("#edit_appointment").serializeArray();
     save(jQuery("#displaymessage"), data);
@@ -96,6 +102,6 @@ jQuery(document).ready(function($) {
     tb_remove();
     return false;
   }); 
-  
+
 });
 </script>

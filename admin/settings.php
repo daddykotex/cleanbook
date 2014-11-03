@@ -246,6 +246,8 @@ function cleanbook_show_form() {
     } else {
         echo sprintf(__('No appointment found with id [%s]', 'cleanbook'), $id);
     }
+    
+    die;
 }
 
 add_action( 'wp_ajax_show_form', 'cleanbook_show_form' ); 
