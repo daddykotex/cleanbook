@@ -3,7 +3,7 @@ Contributors: francoeurdavid
 Tags: booking, appointment, form, bootstrap, cleanbook, calendar, multilingual
 Requires at least: 3.8.1
 Tested up to: 4.0
-Stable tag: 1.1
+Stable tag: 1.2
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UJ5KDKRGHQZES
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@ Shows a calendar of all the active appointments and a form to submit an appointm
 
 This plugin is very simple as of now. It shows a calendar of all the active appointments using [Bootstrap Calendar](http://bootstrap-calendar.azurewebsites.net/) and a form is available right next to it to allow registration of new events. The calendar only show active appointments.
 
-The administrator can activate/deactivate appointment via a list in the admin section of your Wordpress installation.
+The administrator can activate/deactivate appointment via a list in the admin section of your Wordpress installation. The administrator can also manage all appointments data from there. It is also possible to receive en email upon the registration of a new event.
 
 The plugin is based upon another similar plugin called [Fastbook](https://wordpress.org/plugins/fastbook-responsive-appointment-booking-and-scheduling-system/). While not much was kept, I used it to learn and to build upon. Thanks a lot to the Fastbook team.
 
@@ -76,6 +76,10 @@ A: If you have W3TC, and have an UNEXPECTED TOKEN ILLEGAL ERROR. The minifying p
 The name I used is : wp-includes/js/underscore.min.js
 
 == Changelog ==
+
+= 1.2 =
+
+* Appointment editable via the list and a modal popup
 
 = 1.1 =
 
