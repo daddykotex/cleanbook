@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: Cleanbook - Responsive plugin based on Bootstrap
-Plugin URI: 
-Description: Cleanbook shows a form, i18n, so you can book a rendez-vous. This plugin is based on Fastbook.
+Plugin Name: Cleanbook
+Plugin URI: https://wordpress.org/plugins/cleanbook/
+Description: Cleanbook shows a form, i18n, so you can book an appointment.
 Text Domain: cleanbook
 Domain Path: /languages
-Version: 1.0
+Version: 1.2
 Author: David Francoeur
 Author URI: http://davidfrancoeur.ca
-License: GPLv3 or later 
+License: GPLv2 or later 
 */
 
 define('SITE_URL', get_option('siteurl'));
