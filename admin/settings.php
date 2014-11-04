@@ -8,9 +8,11 @@ function cleanbook_admin_scripts() {
     wp_enqueue_style('cleanbook-admin-style', CLEANBOOK_URL . 'admin/css/style.css',array()); 
 
     //js
-    wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);   
+    wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.min.js', array('jquery'), '', true);   
 
-    wp_enqueue_script('cleanbook-admin', CLEANBOOK_URL . 'admin/js/cleanbook-admin.js', array('jquery'),'', true);
+    wp_enqueue_script('cleanbook-admin', CLEANBOOK_URL . 'admin/js/cleanbook-admin.js', array('jquery'),'', true);    wp_enqueue_script('jquery-inputmask-js', CLEANBOOK_URL . 'js/jquery.inputmask.bundle.min.js', array('jquery'), '', true);
+    wp_enqueue_script('jquery-inputmask-js', CLEANBOOK_URL . 'js/jquery.inputmask.bundle.min.js', array('jquery'), '', true);
+    
     
     $language = get_bloginfo('language');
     $exploded_language = explode("-", $language);
