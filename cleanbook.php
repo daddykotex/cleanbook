@@ -5,7 +5,7 @@ Plugin URI: https://wordpress.org/plugins/cleanbook/
 Description: Cleanbook shows a form, i18n, so you can book an appointment.
 Text Domain: cleanbook
 Domain Path: /languages
-Version: 1.2
+Version: 1.3
 Author: David Francoeur
 Author URI: http://davidfrancoeur.ca
 License: GPLv2 or later 
