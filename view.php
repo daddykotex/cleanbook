@@ -14,8 +14,6 @@
         <div class="btn-group">
           <button class="btn btn-default" data-calendar-view="year"><?php _e( 'Year', 'cleanbook' ); ?></button>
           <button class="btn btn-default active" data-calendar-view="month"><?php _e( 'Month', 'cleanbook' ); ?></button>
-          <button class="btn  btn-default" data-calendar-view="week"><?php _e( 'Week', 'cleanbook' ); ?></button>
-          <button class="btn btn-default" data-calendar-view="day"><?php _e( 'Day', 'cleanbook' ); ?></button>
         </div>
       </div>
     </div>

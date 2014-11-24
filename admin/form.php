@@ -89,8 +89,10 @@ jQuery(document).ready(function($) {
   jQuery('#cb-datetime').datetimepicker({ 
     lang: cleanbook_admin_ajax.language,
       minDate:'0',
-      format: "Y-m-d H:i:s",
+      format: "Y-m-d H:i",
   });
+
+  jQuery("#cb-phone").inputmask("mask", {"mask": "(999) 999-9999"});
 
   jQuery('#btn_appointment_save').click(function(e) {
     var data = jQuery("#edit_appointment").serializeArray();

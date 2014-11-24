@@ -1,13 +1,22 @@
 // JavaScript Document
 jQuery(document).ready(function($) { 
 
+  	jQuery("#cb-phone").inputmask("mask", {"mask": "(999) 999-9999"});
+
 	jQuery('#cb-datetime').datetimepicker({ 
 		lang: cleanbook_ajax.language,
    		minDate:'0',
-   		format: "Y-m-d H:i:s",
+   		format: "Y-m-d H:i",
  	});	
 
-	var list_appointments = cleanbook_ajax.ajax_url + "?action=" + cleanbook_ajax.action_listing;
+	var list_appointments;
+	if (cleanbook_ajax.events_list && cleanbook_ajax.events_list.success){
+		//given by php
+		list_appointments = cleanbook_ajax.events_list.result;
+	}else {
+		//ajax on each event
+		list_appointments = cleanbook_ajax.ajax_url + "?action=" + cleanbook_ajax.action_listing;
+	}
 
 	var calendar = jQuery('#calendar').calendar({
 		language: cleanbook_ajax.language_country,
@@ -15,10 +24,19 @@ jQuery(document).ready(function($) {
 		first_day: 2,
 		view: 'month', 
 		events_source: list_appointments,
+		
+		onBeforeEventsLoad: function(next){
+			console.log("before");
+			jQuery(".loading").show();
+			next();
+		},
+		onAfterEventsLoad: function(events){
+			console.log("after");
+
+			jQuery(".loading").hide();
+		},
 
 		onAfterViewLoad: function(view) {
-			jQuery(".loading").hide();
-
 			jQuery('h3.current-calendar').text(this.getTitle());
 			jQuery('.btn-group button').removeClass('active');
 			jQuery('button[data-calendar-view="' + view + '"]').addClass('active');
@@ -29,7 +47,6 @@ jQuery(document).ready(function($) {
 	jQuery('.btn-group button[data-calendar-nav]').each(function() {
 		var handle = jQuery(this);
 		handle.click(function() {
-			jQuery(".loading").show();
 			calendar.navigate(handle.data('calendar-nav'));
 		}); 
 	});
@@ -37,7 +54,6 @@ jQuery(document).ready(function($) {
 	jQuery('.btn-group button[data-calendar-view]').each(function() {
 		var handle = jQuery(this);
 		handle.click(function() {
-		jQuery(".loading").show();
 			calendar.view(handle.data('calendar-view'));
 		});
 	});

@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: Cleanbook - Responsive plugin based on Bootstrap
-Plugin URI: 
-Description: Cleanbook shows a form, i18n, so you can book a rendez-vous. This plugin is based on Fastbook.
+Plugin Name: Cleanbook
+Plugin URI: https://wordpress.org/plugins/cleanbook/
+Description: Cleanbook shows a form, i18n, so you can book an appointment.
 Text Domain: cleanbook
 Domain Path: /languages
-Version: 1.0
+Version: 1.3
 Author: David Francoeur
 Author URI: http://davidfrancoeur.ca
-License: GPLv3 or later 
+License: GPLv2 or later 
 */
 
 define('SITE_URL', get_option('siteurl'));
@@ -49,7 +49,9 @@ function cleanbook_scripts() {
     wp_enqueue_style('cleanbook-style', CLEANBOOK_URL . 'css/style.css',array());  
 
     //js
-    wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.js', array('jquery'), '', true);
+    wp_enqueue_script('jquery-datetimepicker-js', CLEANBOOK_URL . 'js/jquery.datetimepicker.min.js', array('jquery'), '', true);
+    wp_enqueue_script('jquery-inputmask-js', CLEANBOOK_URL . 'js/jquery.inputmask.bundle.min.js', array('jquery'), '', true);
+    
     $language = get_bloginfo('language');
     $exploded_language = explode("-", $language);
 
@@ -61,6 +63,13 @@ function cleanbook_scripts() {
 
     wp_enqueue_script('cleanbook', CLEANBOOK_URL . 'js/cleanbook.js', array('calendar-js'),'', true);
     
+    $options = get_option('cleanbook_options');
+
+    $events = false;
+    if($options['load_events_once'] == 1){
+        $events = cleanbook_fetch_appointments(!current_user_can('activate_plugins'));
+    }
+
     $cleanbook_ajax = array( 
         'ajax_url' => admin_url( 'admin-ajax.php' ),
         'action_booking' => 'cleanbook_booking',
@@ -68,6 +77,7 @@ function cleanbook_scripts() {
         'language_country'  =>  $language,
         'language'  =>  $exploded_language[0],
         'country'  =>  $exploded_language[1],
+        'events_list' => $events,
         'tmpl_path' =>  CLEANBOOK_URL . 'js/tmpls/',
         'error_message' => __("An error has occured. Please contact the administrator.", "cleanbook")
         );
@@ -183,16 +193,24 @@ add_action( 'wp_ajax_cleanbook_booking', 'cleanbook_booking' );
 add_action( 'wp_ajax_nopriv_cleanbook_booking', 'cleanbook_booking' ); 
 
 function cleanbook_fetch_active_appointments(){
-    cleanbook_fetch_appointments(true);    
+    cleanbook_fetch_appointments_ajax(true);    
 }
 
 function cleanbook_fetch_all_appointments(){
-    cleanbook_fetch_appointments(false);
+    cleanbook_fetch_appointments_ajax(false);
 }
 
 function cleanbook_fetch_appointments($active_only) {
-    $start = date('Y-m-d', trim($_GET['from']) / 1000);
-    $end   = date('Y-m-d', trim($_GET['to']) / 1000);
+    
+    if($_GET['from'] && $_GET['to']){
+        $start = date('Y-m-d', trim($_GET['from']) / 1000);
+        $end   = date('Y-m-d', trim($_GET['to']) / 1000);
+    } else {
+        $one_year_in_seconds = 31536000;
+
+        $start = date('Y-m-d', time() - $one_year_in_seconds);
+        $end = date('Y-m-d', time() + $one_year_in_seconds);
+    }
 
     global $wpdb;
 
@@ -223,10 +241,19 @@ function cleanbook_fetch_appointments($active_only) {
             );
     }
 
-    echo json_encode(array('success' => 1, 'result' => $out));
+    return array('success' => 1, 'result' => $out);
 
+}
+
+function cleanbook_fetch_appointments_ajax($active_only) {
+    $events = cleanbook_fetch_appointments($active_only);
+
+    if($events['success'] == 1){
+        echo json_encode($events);
+    } else {
+        echo json_encode(array('success' => 0));
+    }
     die;
-
 }
 
 add_action( 'wp_ajax_nopriv_cleanbook_listing', 'cleanbook_fetch_active_appointments' ); 
