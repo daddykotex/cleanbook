@@ -64,3 +64,4 @@ $hasResults = !empty($results);
 		?>
 	</div><!-- #appoitnments -->
 </div><!-- wrap -->
+
