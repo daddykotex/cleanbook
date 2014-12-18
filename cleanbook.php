@@ -2,10 +2,10 @@
 /*
 Plugin Name: Cleanbook
 Plugin URI: https://wordpress.org/plugins/cleanbook/
-Description: Cleanbook shows a form, i18n, so you can book an appointment.
+Description: Cleanbook shows a beautiful calendar and a form right next to it. The form is used to register appointments that have to be activated by an administrator from the control panel.
 Text Domain: cleanbook
 Domain Path: /languages
-Version: 1.3
+Version: 1.3.1
 Author: David Francoeur
 Author URI: http://davidfrancoeur.ca
 License: GPLv2 or later 
